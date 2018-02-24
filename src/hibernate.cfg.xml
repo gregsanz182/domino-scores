@@ -45,9 +45,5 @@ Contributor(s):
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
     <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/domino-scores</property>
     <property name="hibernate.connection.username">postgres</property>
-    <mapping resource="Modelos/Participantes.hbm.xml"/>
-    <mapping resource="Modelos/Jugadores.hbm.xml"/>
-    <mapping resource="Modelos/Rondas.hbm.xml"/>
-    <mapping resource="Modelos/Partidas.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
