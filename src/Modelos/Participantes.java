@@ -12,28 +12,28 @@ public class Participantes  implements java.io.Serializable {
 
 
      private ParticipantesId id;
-     private Jugadores jugadoresByJugadorDosId;
-     private Jugadores jugadoresByJugadorUnoId;
-     private Partidas partidas;
+     private Jugadores jugadorDos;
+     private Jugadores jugadorUno;
+     private Partidas partida;
      private String nombreGrupo;
-     private Set rondases = new HashSet(0);
+     private Set rondas = new HashSet(0);
 
     public Participantes() {
     }
 
 	
-    public Participantes(ParticipantesId id, Jugadores jugadoresByJugadorUnoId, Partidas partidas) {
+    public Participantes(ParticipantesId id, Jugadores jugadorUno, Partidas partida) {
         this.id = id;
-        this.jugadoresByJugadorUnoId = jugadoresByJugadorUnoId;
-        this.partidas = partidas;
+        this.jugadorUno = jugadorUno;
+        this.partida = partida;
     }
-    public Participantes(ParticipantesId id, Jugadores jugadoresByJugadorDosId, Jugadores jugadoresByJugadorUnoId, Partidas partidas, String nombreGrupo, Set rondases) {
+    public Participantes(ParticipantesId id, Jugadores jugadorDos, Jugadores jugadorUno, Partidas partida, String nombreGrupo, Set rondas) {
        this.id = id;
-       this.jugadoresByJugadorDosId = jugadoresByJugadorDosId;
-       this.jugadoresByJugadorUnoId = jugadoresByJugadorUnoId;
-       this.partidas = partidas;
+       this.jugadorDos = jugadorDos;
+       this.jugadorUno = jugadorUno;
+       this.partida = partida;
        this.nombreGrupo = nombreGrupo;
-       this.rondases = rondases;
+       this.rondas = rondas;
     }
    
     public ParticipantesId getId() {
@@ -43,26 +43,26 @@ public class Participantes  implements java.io.Serializable {
     public void setId(ParticipantesId id) {
         this.id = id;
     }
-    public Jugadores getJugadoresByJugadorDosId() {
-        return this.jugadoresByJugadorDosId;
+    public Jugadores getJugadorDos() {
+        return this.jugadorDos;
     }
     
-    public void setJugadoresByJugadorDosId(Jugadores jugadoresByJugadorDosId) {
-        this.jugadoresByJugadorDosId = jugadoresByJugadorDosId;
+    public void setJugadorDos(Jugadores jugadorDos) {
+        this.jugadorDos = jugadorDos;
     }
-    public Jugadores getJugadoresByJugadorUnoId() {
-        return this.jugadoresByJugadorUnoId;
-    }
-    
-    public void setJugadoresByJugadorUnoId(Jugadores jugadoresByJugadorUnoId) {
-        this.jugadoresByJugadorUnoId = jugadoresByJugadorUnoId;
-    }
-    public Partidas getPartidas() {
-        return this.partidas;
+    public Jugadores getJugadorUno() {
+        return this.jugadorUno;
     }
     
-    public void setPartidas(Partidas partidas) {
-        this.partidas = partidas;
+    public void setJugadorUno(Jugadores jugadorUno) {
+        this.jugadorUno = jugadorUno;
+    }
+    public Partidas getPartida() {
+        return this.partida;
+    }
+    
+    public void setPartida(Partidas partida) {
+        this.partida = partida;
     }
     public String getNombreGrupo() {
         return this.nombreGrupo;
@@ -71,12 +71,12 @@ public class Participantes  implements java.io.Serializable {
     public void setNombreGrupo(String nombreGrupo) {
         this.nombreGrupo = nombreGrupo;
     }
-    public Set getRondases() {
-        return this.rondases;
+    public Set getRondas() {
+        return this.rondas;
     }
     
-    public void setRondases(Set rondases) {
-        this.rondases = rondases;
+    public void setRondas(Set rondas) {
+        this.rondas = rondas;
     }
 
 

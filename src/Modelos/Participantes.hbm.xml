@@ -12,19 +12,19 @@
                 <column name="partida_id" />
             </key-property>
         </composite-id>
-        <many-to-one name="jugadoresByJugadorDosId" class="Modelos.Jugadores" fetch="select">
+        <many-to-one name="jugadorDos" class="Modelos.Jugadores" fetch="select">
             <column name="jugador_dos_id" />
         </many-to-one>
-        <many-to-one name="jugadoresByJugadorUnoId" class="Modelos.Jugadores" fetch="select">
+        <many-to-one name="jugadorUno" class="Modelos.Jugadores" fetch="select">
             <column name="jugador_uno_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="partidas" class="Modelos.Partidas" update="false" insert="false" fetch="select">
+        <many-to-one name="partida" class="Modelos.Partidas" update="false" insert="false" fetch="select">
             <column name="partida_id" not-null="true" />
         </many-to-one>
         <property name="nombreGrupo" type="string">
             <column name="nombre_grupo" />
         </property>
-        <set name="rondases" table="rondas" inverse="true" lazy="true" fetch="select">
+        <set name="rondas" table="rondas" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="participante_id" not-null="true" />
                 <column name="participante_partida_id" not-null="true" />
