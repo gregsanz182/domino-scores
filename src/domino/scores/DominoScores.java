@@ -17,6 +17,12 @@ public class DominoScores {
     public static void main(String[] args) {
         // TODO code application logic here
         Principal p = new Principal();
+        pruebas();
+    }
+    
+    public static void pruebas() {
+        SessionManager sm = new SessionManager();
+        sm.getAndSaveJugador("dfdfdfdfdf");
     }
     
 }
