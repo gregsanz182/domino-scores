@@ -15,6 +15,7 @@ public class Jugadores  implements java.io.Serializable {
      private String apodo;
      private Set participantesesForJugadorDosId = new HashSet(0);
      private Set participantesesForJugadorUnoId = new HashSet(0);
+     private Set participacionesTotal = new HashSet(0);
 
     public Jugadores() {
     }
@@ -27,6 +28,8 @@ public class Jugadores  implements java.io.Serializable {
        this.apodo = apodo;
        this.participantesesForJugadorDosId = participantesesForJugadorDosId;
        this.participantesesForJugadorUnoId = participantesesForJugadorUnoId;
+       this.participacionesTotal = participantesesForJugadorDosId;
+       this.participacionesTotal.addAll(participantesesForJugadorUnoId);
     }
    
     public int getId() {
@@ -57,10 +60,9 @@ public class Jugadores  implements java.io.Serializable {
     public void setParticipantesesForJugadorUnoId(Set participantesesForJugadorUnoId) {
         this.participantesesForJugadorUnoId = participantesesForJugadorUnoId;
     }
-
-
-
-
+    public Set getParticipaciones() {
+        return this.participacionesTotal;
+    }
 }
 
 
