@@ -58,5 +58,4 @@ public class SessionManager {
         session.flush();
         session.getTransaction().commit();
     }
-    
 }
