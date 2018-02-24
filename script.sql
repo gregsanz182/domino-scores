@@ -16,19 +16,17 @@ CREATE TABLE partidas (
 );
 
 CREATE TABLE participantes (
-	id integer,
+	id serial primary key,
 	partida_id integer references partidas(id),
 	nombre_grupo varchar,
 	jugador_uno_id integer references jugadores(id) not null,
-	jugador_dos_id integer references jugadores(id),
-	primary key (id, partida_id)
+	jugador_dos_id integer references jugadores(id)
 );
 
 CREATE TABLE rondas (
 	id serial primary key,
 	numero_ronda integer not null,
 	puntaje integer not null,
-	participante_id integer not null,
-	participante_partida_id integer not null,
-	FOREIGN KEY (participante_id, participante_partida_id) REFERENCES participantes(id, partida_id)
+	participante_id integer references participantes(id) not null,
+	partida_id integer references partidas(id) not null
 );
