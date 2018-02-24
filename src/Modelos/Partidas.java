@@ -15,7 +15,7 @@ public class Partidas  implements java.io.Serializable {
      private int id;
      private Date fecha;
      private int puntajeMax;
-     private Set participanteses = new HashSet(0);
+     private Set participantes = new HashSet(0);
 
     public Partidas() {
     }
@@ -26,11 +26,11 @@ public class Partidas  implements java.io.Serializable {
         this.fecha = fecha;
         this.puntajeMax = puntajeMax;
     }
-    public Partidas(int id, Date fecha, int puntajeMax, Set participanteses) {
+    public Partidas(int id, Date fecha, int puntajeMax, Set participantes) {
        this.id = id;
        this.fecha = fecha;
        this.puntajeMax = puntajeMax;
-       this.participanteses = participanteses;
+       this.participantes = participantes;
     }
    
     public int getId() {
@@ -54,17 +54,13 @@ public class Partidas  implements java.io.Serializable {
     public void setPuntajeMax(int puntajeMax) {
         this.puntajeMax = puntajeMax;
     }
-    public Set getParticipanteses() {
-        return this.participanteses;
+    public Set getParticipantes() {
+        return this.participantes;
     }
     
-    public void setParticipanteses(Set participanteses) {
-        this.participanteses = participanteses;
+    public void setParticipantes(Set participantes) {
+        this.participantes = participantes;
     }
-
-
-
-
 }
 
 

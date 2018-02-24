@@ -10,16 +10,16 @@ public class Rondas  implements java.io.Serializable {
 
 
      private int id;
-     private Participantes participantes;
+     private Participantes participante;
      private int numeroRonda;
      private int puntaje;
 
     public Rondas() {
     }
 
-    public Rondas(int id, Participantes participantes, int numeroRonda, int puntaje) {
+    public Rondas(int id, Participantes participante, int numeroRonda, int puntaje) {
        this.id = id;
-       this.participantes = participantes;
+       this.participante = participante;
        this.numeroRonda = numeroRonda;
        this.puntaje = puntaje;
     }
@@ -32,11 +32,11 @@ public class Rondas  implements java.io.Serializable {
         this.id = id;
     }
     public Participantes getParticipantes() {
-        return this.participantes;
+        return this.participante;
     }
     
-    public void setParticipantes(Participantes participantes) {
-        this.participantes = participantes;
+    public void setParticipantes(Participantes participante) {
+        this.participante = participante;
     }
     public int getNumeroRonda() {
         return this.numeroRonda;

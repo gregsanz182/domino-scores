@@ -14,7 +14,7 @@
         <property name="puntajeMax" type="int">
             <column name="puntaje_max" not-null="true" />
         </property>
-        <set name="participanteses" table="participantes" inverse="true" lazy="true" fetch="select">
+        <set name="participantes" table="participantes" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="partida_id" not-null="true" />
             </key>
