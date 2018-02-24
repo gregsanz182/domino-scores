@@ -13,8 +13,9 @@ public class Jugadores  implements java.io.Serializable {
 
      private int id;
      private String apodo;
-     private Set participantesesForJugadorDosId = new HashSet(0);
-     private Set participantesesForJugadorUnoId = new HashSet(0);
+     private Set participacionesUno = new HashSet(0);
+     private Set participacionesDos = new HashSet(0);
+     private Set participaciones = new HashSet(0);
 
     public Jugadores() {
     }
@@ -24,11 +25,13 @@ public class Jugadores  implements java.io.Serializable {
         this.id = id;
         this.apodo = apodo;
     }
-    public Jugadores(int id, String apodo, Set participantesesForJugadorDosId, Set participantesesForJugadorUnoId) {
+    public Jugadores(int id, String apodo, Set participacionesDos, Set participacionesUno) {
        this.id = id;
        this.apodo = apodo;
-       this.participantesesForJugadorDosId = participantesesForJugadorDosId;
-       this.participantesesForJugadorUnoId = participantesesForJugadorUnoId;
+       this.participacionesUno = participacionesUno;
+       this.participacionesDos = participacionesDos;
+       this.participaciones = participacionesUno;
+       this.participaciones.addAll(participacionesDos);
     }
    
     public int getId() {
@@ -45,23 +48,27 @@ public class Jugadores  implements java.io.Serializable {
     public void setApodo(String apodo) {
         this.apodo = apodo;
     }
-    public Set getParticipantesesForJugadorDosId() {
-        return this.participantesesForJugadorDosId;
+    public Set getParticipacionesUno() {
+        return this.participacionesUno;
     }
     
-    public void setParticipantesesForJugadorDosId(Set participantesesForJugadorDosId) {
-        this.participantesesForJugadorDosId = participantesesForJugadorDosId;
+    public void setParticipacionesUno(Set participacionesUno) {
+        this.participacionesUno = participacionesUno;
     }
-    public Set getParticipantesesForJugadorUnoId() {
-        return this.participantesesForJugadorUnoId;
+    public Set getParticipacionesDos() {
+        return this.participacionesDos;
     }
     
-    public void setParticipantesesForJugadorUnoId(Set participantesesForJugadorUnoId) {
-        this.participantesesForJugadorUnoId = participantesesForJugadorUnoId;
+    public void setParticipacionesDos(Set participacionesDos) {
+        this.participacionesDos = participacionesDos;
     }
-
-
-
+    
+    public Set getParticipaciones() {
+        return this.participaciones;
+    }
+    public void setParticipaciones(Set participaciones) {
+        this.participaciones = participaciones;
+    }
 
 }
 

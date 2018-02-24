@@ -11,13 +11,13 @@
         <property name="apodo" type="string">
             <column name="apodo" not-null="true" />
         </property>
-        <set name="participantesesForJugadorDosId" table="participantes" inverse="true" lazy="true" fetch="select">
+        <set name="participacionesDos" table="participantes" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="jugador_dos_id" />
             </key>
             <one-to-many class="Modelos.Participantes" />
         </set>
-        <set name="participantesesForJugadorUnoId" table="participantes" inverse="true" lazy="true" fetch="select">
+        <set name="participacionesUno" table="participantes" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="jugador_uno_id" not-null="true" />
             </key>
