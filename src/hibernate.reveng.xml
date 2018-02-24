@@ -42,7 +42,7 @@ Contributor(s):
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="domino-scores" match-schema="public"/>
   <table-filter match-name="partidas"/>
-  <table-filter match-name="participantes"/>
-  <table-filter match-name="rondas"/>
   <table-filter match-name="jugadores"/>
+  <table-filter match-name="rondas"/>
+  <table-filter match-name="participantes"/>
 </hibernate-reverse-engineering>
