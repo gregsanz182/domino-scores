@@ -15,7 +15,12 @@ public class DominoScores {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        pruebas();
+    }
+    
+    public static void pruebas() {
+        SessionManager sm = new SessionManager();
+        sm.getAndSaveJugador("holaaaaa");
     }
     
 }
