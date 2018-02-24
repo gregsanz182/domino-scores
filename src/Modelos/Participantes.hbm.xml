@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24/02/2018 01:40:43 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelos.Participantes" table="participantes" schema="public" optimistic-lock="version">
+        <composite-id name="id" class="Modelos.ParticipantesId">
+            <key-property name="id" type="int">
+                <column name="id" />
+            </key-property>
+            <key-property name="partidaId" type="int">
+                <column name="partida_id" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="jugadoresByJugadorDosId" class="Modelos.Jugadores" fetch="select">
+            <column name="jugador_dos_id" />
+        </many-to-one>
+        <many-to-one name="jugadoresByJugadorUnoId" class="Modelos.Jugadores" fetch="select">
+            <column name="jugador_uno_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="partidas" class="Modelos.Partidas" update="false" insert="false" fetch="select">
+            <column name="partida_id" not-null="true" />
+        </many-to-one>
+        <property name="nombreGrupo" type="string">
+            <column name="nombre_grupo" />
+        </property>
+        <set name="rondases" table="rondas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="participante_id" not-null="true" />
+                <column name="participante_partida_id" not-null="true" />
+            </key>
+            <one-to-many class="Modelos.Rondas" />
+        </set>
+    </class>
+</hibernate-mapping>
