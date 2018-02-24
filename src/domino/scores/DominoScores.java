@@ -20,7 +20,7 @@ public class DominoScores {
     
     public static void pruebas() {
         SessionManager sm = new SessionManager();
-        sm.getAndSaveJugador("holaaaaa");
+        sm.getAndSaveJugador("dfdfdfdfdf");
     }
     
 }
