@@ -23,6 +23,9 @@ public class Rondas  implements java.io.Serializable {
        this.partidas = partidas;
        this.numeroRonda = numeroRonda;
        this.puntaje = puntaje;
+       this.participantes.getRondases().add(this);
+       this.partidas.getRondases().add(this);
+       this.participantes.sumPuntaje(puntaje);
     }
    
     public int getId() {

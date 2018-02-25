@@ -20,8 +20,10 @@ public class Partidas  implements java.io.Serializable {
 
     public Partidas() {
     }
-
-	
+    public Partidas(int puntajeMax) {
+        this.fecha = new Date();
+        this.puntajeMax = puntajeMax;
+    }	
     public Partidas(Date fecha, int puntajeMax) {
         this.fecha = fecha;
         this.puntajeMax = puntajeMax;
