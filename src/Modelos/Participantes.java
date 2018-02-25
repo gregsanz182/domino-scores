@@ -29,9 +29,10 @@ public class Participantes  implements java.io.Serializable {
         this.partidas.getParticipanteses().add(this);
         this.jugadoresByJugadorUnoId.getParticipantesesForJugadorUnoId().add(this);
     }
-    public Participantes(Jugadores jugadoresByJugadorUnoId, Jugadores jugadoresByJugadorDosId, Partidas partida) {
+    public Participantes(Jugadores jugadoresByJugadorUnoId, Jugadores jugadoresByJugadorDosId, Partidas partida, String nombreEquipo) {
        this.jugadoresByJugadorDosId = jugadoresByJugadorDosId;
        this.jugadoresByJugadorUnoId = jugadoresByJugadorUnoId;
+       this.nombreGrupo = nombreEquipo;
        this.partidas = partida;
        this.partidas.getParticipanteses().add(this);
        this.jugadoresByJugadorUnoId.getParticipantesesForJugadorUnoId().add(this);

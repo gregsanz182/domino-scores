@@ -55,7 +55,7 @@ public class Dominota {
         return true;
     }
     
-    public boolean iniciarPartidaGrupal(ArrayList<String> nombreJugadores1, ArrayList<String> nombreJugadores2) {
+    public boolean iniciarPartidaGrupal(String nombreEquipo1, ArrayList<String> nombreJugadores1, String nombreEquipo2, ArrayList<String> nombreJugadores2) {
         ArrayList<Jugadores> jugadores1 = new ArrayList<>();
         ArrayList<Jugadores> jugadores2 = new ArrayList<>();
         Jugadores aux = null;
@@ -77,8 +77,8 @@ public class Dominota {
         participantes = new ArrayList<>();
         partida = new Partidas(this.puntajeMax);
         
-        participantes.add(new Participantes(jugadores1.get(0), jugadores1.get(1), partida));
-        participantes.add(new Participantes(jugadores2.get(0), jugadores2.get(1), partida));
+        participantes.add(new Participantes(jugadores1.get(0), jugadores1.get(1), partida, nombreEquipo1));
+        participantes.add(new Participantes(jugadores2.get(0), jugadores2.get(1), partida, nombreEquipo2));
         
         return true;
     }
@@ -87,6 +87,11 @@ public class Dominota {
         Participantes part = participantes.get(numeroParticipante);
         Rondas ronda = new Rondas(part, this.partida, this.numRonda++, puntaje);
         return part.getPuntaje();
+    }
+    
+    public int ganarRonda(Participantes participante, int puntaje) {
+        Rondas ronda = new Rondas(participante, this.partida, this.numRonda++, puntaje);
+        return participante.getPuntaje();
     }
     
     public boolean guardarPartida() {
