@@ -22,7 +22,7 @@
         <property name="nombreGrupo" type="string">
             <column name="nombre_grupo" />
         </property>
-        <set name="rondases" table="rondas" inverse="true" lazy="true" fetch="select">
+        <set name="rondases" table="rondas" cascade="save-update" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="participante_id" not-null="true" />
             </key>
