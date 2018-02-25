@@ -47,7 +47,7 @@ public class Welcome extends JFrame {
         card.addLayoutComponent(dualTeaminfo, Configuration.DUAL_TEAM_INFO);
         card.addLayoutComponent(loadUser, Configuration.LOAD_USER);
         
-      //  card.show(container, Configuration.WELCOME);
+       card.show(container, Configuration.WELCOME);
         setVisible(true);
         
         addWindowListener( new WindowAdapter() {

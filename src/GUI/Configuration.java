@@ -70,6 +70,8 @@ public class Configuration {
                             listUserOne,
                             (String) listUserTwo.get(0),
                             listUserTwo);
+                    
+                    System.out.println(isRunningGame);
                 }
         } else
             listUsers.add(name);
