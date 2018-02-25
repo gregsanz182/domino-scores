@@ -91,12 +91,24 @@ public class LoadUser extends JPanel implements MouseListener{
     @Override
     public void mousePressed(MouseEvent e) {
        if(e.getSource() == btn_new) {
+           if(configuration.getUsers().size() < 2) {
             String seleccion = JOptionPane.showInputDialog(
                     new JTextField(""),
                     "Nombre",
                     JOptionPane.QUESTION_MESSAGE);
             if(seleccion != null)
                 addUser(seleccion);
+           } else {
+               JOptionPane.showOptionDialog(
+                    new JLabel(""),
+                    "Ya hay dos jugadores por equipo", 
+                    "Dupla formada",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    new Object[] { "Aceptar" },   // null para YES, NO y CANCEL
+                    "opcion 1");
+           }
        }
        
        if(e.getSource() == btn_back)
