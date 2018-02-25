@@ -6,12 +6,20 @@
 package GUI.Views;
 
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.scene.layout.Border;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 /**
@@ -25,10 +33,19 @@ public class DualTeamInfo extends JPanel implements MouseListener{
     private JButton add_two = new JButton("Agregar");
     private JButton edit_one = new JButton("Agregar puntos");
     private JButton edit_two = new JButton("Agregar puntos");
-    private CardLayout card;
+    private JPanel panelPoints = new JPanel();
     
-    public DualTeamInfo(CardLayout card){
+    private int points_one = 0;
+    private int points_two = 0;
+    private int posY = 0;
+    private int tamPanel = 340;
+    
+    private CardLayout card;
+    private JFrame frame;
+    
+    public DualTeamInfo(CardLayout card, JFrame frame){
         super();
+        this.frame = frame;
         this.card = card;
         setLayout(null);
         setSize(720,520);
@@ -48,8 +65,39 @@ public class DualTeamInfo extends JPanel implements MouseListener{
         edit_one.setBounds(185,140,150,30);
         edit_two.setBounds(385,140,150,30);
         
+        JScrollPane scrollPane = new JScrollPane(panelPoints);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBounds(0, 180, 720, 340);
+        panelPoints.setPreferredSize(new Dimension(720, 390));
+        panelPoints.setLayout(null);
+        add(scrollPane);
+        
         edit_one.addMouseListener(this);
         edit_two.addMouseListener(this);
+    }
+    
+    private void addPoints(boolean isOne, int points){
+        JLabel newPoint = null;
+        int posX = 0;
+        
+        if(isOne) {
+            points_one += points;
+            newPoint = new JLabel(points + "-" + points_one);
+            posX = 185;
+        } else {
+            points_two += points;
+            newPoint = new JLabel(points + "-" + points_two);
+            posX = 360;
+        }
+        
+        newPoint.setBounds(posX,posY,175,30);
+        newPoint.setBorder(BorderFactory.createLineBorder(Color.black));
+        
+        posY += 31;
+        panelPoints.add(newPoint);
+        if(posY > tamPanel)
+            panelPoints.setPreferredSize(new Dimension(720, posY + 50));
+        frame.paintAll(frame.getGraphics()); 
     }
 
     @Override
@@ -64,6 +112,8 @@ public class DualTeamInfo extends JPanel implements MouseListener{
                     new JTextField(""),
                     "Puntos",
                     JOptionPane.QUESTION_MESSAGE);
+            if(seleccion != null)
+              addPoints(true, Integer.parseInt(seleccion));
         } 
         
         if(e.getSource() == edit_two) {
@@ -71,6 +121,8 @@ public class DualTeamInfo extends JPanel implements MouseListener{
                     new JTextField(""),
                     "Puntos",
                     JOptionPane.QUESTION_MESSAGE);
+            if(seleccion != null)
+              addPoints(false, Integer.parseInt(seleccion));
         }
     }
 

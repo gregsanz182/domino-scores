@@ -32,7 +32,7 @@ public class Welcome extends JFrame {
         container.setLayout(card);
         
         welcomePanel = new WelcomePanel(card);
-        dualTeaminfo = new DualTeamInfo(card);
+        dualTeaminfo = new DualTeamInfo(card, this);
         
         container.add(welcomePanel);
         container.add(dualTeaminfo);
