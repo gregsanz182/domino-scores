@@ -5,6 +5,8 @@
  */
 package GUI.Services;
 
+import domino.scores.Dominota;
+import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,9 +16,10 @@ import org.json.JSONObject;
  */
 public class HandlerServiceBack {
     private static HandlerServiceBack handlerServiceBack;
+    private Dominota dominota;
     
     private HandlerServiceBack() {
-        
+        this.dominota = new Dominota(150);
     }
     
     public static HandlerServiceBack getSingletonInstance() {
@@ -35,22 +38,10 @@ public class HandlerServiceBack {
         return null; 
     }
     
-    public static void createGame(
-        String userOneTeamOne, String userTwoTeamOne,
-        String userOneTeamTwo, String userTwoTeamTwo) throws JSONException {
-        
-       JSONObject teamOne = new JSONObject();
-       teamOne.put("player_one", userOneTeamOne);
-       teamOne.put("player_two", userTwoTeamOne);
-       
-       JSONObject teamTwo = new JSONObject();
-       teamTwo.put("player_one", userOneTeamOne);
-       teamTwo.put("player_two", userTwoTeamOne);
-       
-       JSONObject data = new JSONObject();
-       teamTwo.put("team_one", teamOne);
-       teamTwo.put("team_two", teamTwo);
-       
-       
+    public static boolean createGame(
+            String nameTeamOne, ArrayList<String> listTeamOne,
+            String nameTeamTwo, ArrayList<String> ListTeamTwo) {
+        return handlerServiceBack.
+                dominota.iniciarPartidaGrupal(nameTeamOne, listTeamOne, nameTeamTwo, ListTeamTwo);
     }
 }

@@ -22,9 +22,12 @@ public class Configuration {
     private boolean dual;
     private boolean isRunningGame;
     
-    private List listUserOne = new ArrayList();
-    private List listUserTwo = new ArrayList();
-    private List listUsers = new ArrayList();
+    private ArrayList<String> listUserOne = new ArrayList();
+    private ArrayList<String> listUserTwo = new ArrayList();
+    private ArrayList<String> listUsers = new ArrayList();
+    
+    private String nameTeamOne;
+    private String nameTeamTwo;
     
     public static final String WELCOME = "WELCOME";
     public static final String DUAL_TEAM_INFO = "DUAL_TEAM_INFO";
@@ -61,12 +64,12 @@ public class Configuration {
             
             if(!isRunningGame)
                 if(listUserOne.size() == 2 && listUserTwo.size() == 2) {
-                    isRunningGame = true;
+                    isRunningGame = 
                     HandlerServiceBack.createGame(
                             (String) listUserOne.get(0),
-                            (String) listUserOne.get(1),
+                            listUserOne,
                             (String) listUserTwo.get(0),
-                            (String) listUserTwo.get(1));
+                            listUserTwo);
                 }
         } else
             listUsers.add(name);
