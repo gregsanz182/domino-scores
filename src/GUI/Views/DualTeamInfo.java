@@ -134,21 +134,47 @@ public class DualTeamInfo extends JPanel implements MouseListener{
     public void mousePressed(MouseEvent e) {
         if(!isGameTerminated) {
             if(e.getSource() == edit_one) {
-                String seleccion = JOptionPane.showInputDialog(
-                    new JTextField(""),
-                    "Puntos",
-                    JOptionPane.QUESTION_MESSAGE);
-                if(seleccion != null)
-                   addPoints(true, Integer.parseInt(seleccion));
+                configuration.setDualOne(true);
+                if(configuration.getUsers().size() == 2) {
+                    String seleccion = JOptionPane.showInputDialog(
+                       new JTextField(""),
+                       "Puntos",
+                       JOptionPane.QUESTION_MESSAGE);
+                    if(seleccion != null)
+                       addPoints(true, Integer.parseInt(seleccion));
+                } else {
+                   JOptionPane.showOptionDialog(
+                       new JLabel(""),
+                       "No puedes ingresar puntos hasta registrar los dos jugadores",
+                       "",
+                       JOptionPane.YES_NO_CANCEL_OPTION,
+                       JOptionPane.QUESTION_MESSAGE,
+                       null,
+                       new Object[] { "Aceptar"},   // null para YES, NO y CANCEL
+                       "opcion 1"); 
+                }
             } 
         
             if(e.getSource() == edit_two) {
-                 String seleccion = JOptionPane.showInputDialog(
-                    new JTextField(""),
-                    "Puntos",
-                    JOptionPane.QUESTION_MESSAGE);
-                 if(seleccion != null)
-                    addPoints(false, Integer.parseInt(seleccion));
+                configuration.setDualOne(false);
+                if(configuration.getUsers().size() == 2) {
+                    String seleccion = JOptionPane.showInputDialog(
+                       new JTextField(""),
+                       "Puntos",
+                       JOptionPane.QUESTION_MESSAGE);
+                    if(seleccion != null)
+                       addPoints(false, Integer.parseInt(seleccion));
+                } else {
+                    JOptionPane.showOptionDialog(
+                       new JLabel(""),
+                       "No puedes ingresar puntos hasta registrar los dos jugadores",
+                       "",
+                       JOptionPane.YES_NO_CANCEL_OPTION,
+                       JOptionPane.QUESTION_MESSAGE,
+                       null,
+                       new Object[] { "Aceptar"},   // null para YES, NO y CANCEL
+                       "opcion 1"); 
+                }
             }
             
             if(e.getSource() == add_one || e.getSource() == add_two) {
@@ -156,13 +182,14 @@ public class DualTeamInfo extends JPanel implements MouseListener{
                     configuration.setDualOne(true);
                 else
                     configuration.setDualOne(false);
-               card.show(container, Configuration.LOAD_USER);
+                configuration.getLoadUser().drawListUser();
+                card.show(container, Configuration.LOAD_USER);
             }
             
         } else {
             int seleccion = JOptionPane.showOptionDialog(
                     new JLabel(""),
-                    "Seleccione opcion", 
+                    "Reiniciar partida", 
                     "Haz ganado",
                     JOptionPane.YES_NO_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE,

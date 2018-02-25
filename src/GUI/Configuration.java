@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import GUI.Views.LoadUser;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import java.util.List;
  * @author Joalcapa
  */
 public class Configuration {
+    private LoadUser loadUser;
+    
     private boolean dualOne;
     private boolean dual;
     
@@ -26,6 +29,7 @@ public class Configuration {
     
     public Configuration() {
         dual = dualOne = true;
+        loadUser = null;
     }
     
     public boolean isDualOne() {
@@ -62,5 +66,13 @@ public class Configuration {
                 return listUserTwo;
         } else
             return listUsers;
+    }
+    
+    public LoadUser getLoadUser() {
+        return loadUser;
+    }
+    
+    public void setLoadUser(LoadUser loadUser){
+        this.loadUser = loadUser;
     }
 }

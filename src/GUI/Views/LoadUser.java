@@ -37,6 +37,7 @@ public class LoadUser extends JPanel implements MouseListener{
     public LoadUser(CardLayout card, JFrame frame, Configuration configuration){
         super();
         this.configuration = configuration;
+        configuration.setLoadUser(this);
         this.card = card;
         this.frame = frame;
         
@@ -60,7 +61,7 @@ public class LoadUser extends JPanel implements MouseListener{
         add(scrollPane);
     }
     
-    private void drawListUser() {
+    public void drawListUser() {
         panelListUser.removeAll();
         posY = 0;
         
