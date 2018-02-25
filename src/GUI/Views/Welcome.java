@@ -5,10 +5,13 @@
  */
 package GUI.Views;
 
+import java.awt.CardLayout;
+import java.awt.Container;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /**
@@ -16,12 +19,21 @@ import javax.swing.JFrame;
  * @author Joalcapa
  */
 public class Welcome extends JFrame implements MouseListener{
+    private WelcomePanel welcomePanel;
+    public static  CardLayout card = new CardLayout();
+    public static Container container;
     
     public Welcome() {
         super("");
+        container = this.getContentPane();
         setBounds(0,0,720,520);
         setLocationRelativeTo(null);
-        setLayout(null);
+        setLayout(card);
+        
+        welcomePanel = new WelcomePanel(this);
+        card.addLayoutComponent(welcomePanel, "WELCOME");
+        card.show(container, "WELCOME");
+        container.add(welcomePanel);
         setVisible(true);
         
         addWindowListener( new WindowAdapter() {
