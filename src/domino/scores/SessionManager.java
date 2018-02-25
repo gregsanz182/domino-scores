@@ -68,11 +68,18 @@ public class SessionManager {
         session.getTransaction().commit();
     }
     
-    public void savePartida(Partidas partida) {
-        session.beginTransaction();
-        session.save(partida);
-        session.flush();
-        session.getTransaction().commit();
+    public boolean savePartida(Partidas partida) {
+        try {
+            session.beginTransaction();
+            session.save(partida);
+            session.flush();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        return true;
     }
     
     public void consulta1 (){
@@ -94,6 +101,7 @@ public class SessionManager {
                     + "join par.jugadoresByJugadorDosId jd "
                     + "where par.jugadoresByJugadorDosId is not null "
                     + "group by ju.apodo ");*/
+            
             Query q = session.createQuery("select j.apodo as apodo, count(pu), count(pd) "
                     + "from Jugadores j left join j.participantesesForJugadorUnoId pu "
                     + "join j.participantesesForJugadorDosId pd "
