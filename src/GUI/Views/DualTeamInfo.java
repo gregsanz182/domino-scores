@@ -134,8 +134,7 @@ public class DualTeamInfo extends JPanel implements MouseListener{
     public void mousePressed(MouseEvent e) {
         if(!isGameTerminated) {
             if(e.getSource() == edit_one) {
-                configuration.setDualOne(true);
-                if(configuration.getUsers().size() == 2) {
+                if(configuration.dualTeamValidate()) {
                     String seleccion = JOptionPane.showInputDialog(
                        new JTextField(""),
                        "Puntos",
@@ -145,7 +144,7 @@ public class DualTeamInfo extends JPanel implements MouseListener{
                 } else {
                    JOptionPane.showOptionDialog(
                        new JLabel(""),
-                       "No puedes ingresar puntos hasta registrar los dos jugadores",
+                       "La partida no puede comenzar hasta no tener los 2 equipos con sus integrantes completos",
                        "",
                        JOptionPane.YES_NO_CANCEL_OPTION,
                        JOptionPane.QUESTION_MESSAGE,
@@ -156,8 +155,7 @@ public class DualTeamInfo extends JPanel implements MouseListener{
             } 
         
             if(e.getSource() == edit_two) {
-                configuration.setDualOne(false);
-                if(configuration.getUsers().size() == 2) {
+                if(configuration.dualTeamValidate()) {
                     String seleccion = JOptionPane.showInputDialog(
                        new JTextField(""),
                        "Puntos",
@@ -167,7 +165,7 @@ public class DualTeamInfo extends JPanel implements MouseListener{
                 } else {
                     JOptionPane.showOptionDialog(
                        new JLabel(""),
-                       "No puedes ingresar puntos hasta registrar los dos jugadores",
+                       "La partida no puede comenzar hasta no tener los 2 equipos con sus integrantes completos",
                        "",
                        JOptionPane.YES_NO_CANCEL_OPTION,
                        JOptionPane.QUESTION_MESSAGE,

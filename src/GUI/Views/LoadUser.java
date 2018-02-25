@@ -11,6 +11,8 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import org.json.JSONException;
 
 /**
  *
@@ -78,7 +81,7 @@ public class LoadUser extends JPanel implements MouseListener{
         frame.paintAll(frame.getGraphics());
     }
     
-    private void addUser(String name){
+    private void addUser(String name) throws JSONException{
         configuration.addUser(name);
         drawListUser();
     }
@@ -97,7 +100,11 @@ public class LoadUser extends JPanel implements MouseListener{
                     "Nombre",
                     JOptionPane.QUESTION_MESSAGE);
             if(seleccion != null)
-                addUser(seleccion);
+                try {
+                    addUser(seleccion);
+            } catch (JSONException ex) {
+                Logger.getLogger(LoadUser.class.getName()).log(Level.SEVERE, null, ex);
+            }
            } else {
                JOptionPane.showOptionDialog(
                     new JLabel(""),

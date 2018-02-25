@@ -6,13 +6,11 @@
 package GUI.Views;
 
 import GUI.Configuration;
+import GUI.Services.HandlerServiceBack;
 import java.awt.CardLayout;
 import java.awt.Container;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /**
@@ -30,6 +28,7 @@ public class Welcome extends JFrame {
     
     public Welcome(Configuration configuration) {
         super("dominota");
+        HandlerServiceBack.getSingletonInstance();
         this.configuration = configuration;
         container = this.getContentPane();
         setBounds(0,0,720,520);

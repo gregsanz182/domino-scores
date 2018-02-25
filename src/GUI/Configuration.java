@@ -5,9 +5,11 @@
  */
 package GUI;
 
+import GUI.Services.HandlerServiceBack;
 import GUI.Views.LoadUser;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONException;
 
 /**
  *
@@ -18,6 +20,7 @@ public class Configuration {
     
     private boolean dualOne;
     private boolean dual;
+    private boolean isRunningGame;
     
     private List listUserOne = new ArrayList();
     private List listUserTwo = new ArrayList();
@@ -29,6 +32,7 @@ public class Configuration {
     
     public Configuration() {
         dual = dualOne = true;
+        isRunningGame = false;
         loadUser = null;
     }
     
@@ -48,12 +52,22 @@ public class Configuration {
         this.dual = dual;
     }
     
-    public void addUser(String name) {
+    public void addUser(String name) throws JSONException {
         if(dual) {
             if(dualOne)
                 listUserOne.add(name);
             else
                 listUserTwo.add(name);
+            
+            if(!isRunningGame)
+                if(listUserOne.size() == 2 && listUserTwo.size() == 2) {
+                    isRunningGame = true;
+                    HandlerServiceBack.createGame(
+                            (String) listUserOne.get(0),
+                            (String) listUserOne.get(1),
+                            (String) listUserTwo.get(0),
+                            (String) listUserTwo.get(1));
+                }
         } else
             listUsers.add(name);
     }
@@ -74,5 +88,11 @@ public class Configuration {
     
     public void setLoadUser(LoadUser loadUser){
         this.loadUser = loadUser;
+    }
+    
+    public boolean dualTeamValidate() {
+        if(listUserOne.size() == 2 && listUserTwo.size() == 2)
+            return true;
+        return false;
     }
 }

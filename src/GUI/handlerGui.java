@@ -5,7 +5,6 @@
  */
 package GUI;
 
-import static domino.scores.DominoScores.pruebas;
 import domino.scores.Principal;
 import GUI.Views.Welcome;
 
