@@ -17,6 +17,7 @@ import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 
 /**
  *
@@ -82,25 +83,32 @@ public class SessionManager {
     }
     
     public void consulta1 (){
-        ArrayList<JugadorPartidas> lista = null;
         try {
-            Query q = session.createQuery(/*"select apodo, sum(individual), sum(grupal) from "
-                                                + "((select j.apodo as apodo, count(p.partidas.id) as individual, 0 as grupal"
-                                                + "from Jugadores j join j.participantesesForJugadorUnoId p "
-                                                + "where p.jugadoresByJugadorDosId is null "
-                                                + "group by j.apodo) "
-                                        + "union all "*/
-                                                "(select j.apodo as apodo, 0 as individual, count(p.partidas.id) as grupal "
-                                                + "from Jugadores j join j.participantesesForJugadorUnoId p "
-                                                + "where p.jugadoresByJugadorDosId is not null "
-                                                + "group by j.apodo)"
-                                                + "UNION ALL"
-                                                + "(select j.apodo as apodo, 0 as individual, count(p.partidas.id) as grupal "
-                                                + "from Jugadores j join j.participantesesForJugadorDosId p "
-                                                + "group by j.apodo)");
-                                       // + "group by apodo");
-            List<Object[]> result = q.list();
-            for(Object[] row: result) {
+            /* cantidad por partidas individuales sirve
+            Query q = session.createQuery("select j.apodo as apodo, count(p) as individual "
+                    + "from Jugadores j left join j.participantesesForJugadorUnoId p "
+                    + "where p.jugadoresByJugadorDosId is null "
+                    + "group by j.apodo ");
+            
+            List<Object[]> lista = q.list();
+            for (Object[] row: lista){
+                System.out.println(row[0] + " -- " + row[1]);
+            }
+            */
+            
+            /*Query q = session.createQuery("select ju.apodo as apodo, count(*) "
+                    + "from Participantes par join par.jugadoresByJugadorUnoId ju "
+                    + "join par.jugadoresByJugadorDosId jd "
+                    + "where par.jugadoresByJugadorDosId is not null "
+                    + "group by ju.apodo ");*/
+            
+            Query q = session.createQuery("select j.apodo as apodo, count(pu), count(pd) "
+                    + "from Jugadores j left join j.participantesesForJugadorUnoId pu "
+                    + "join j.participantesesForJugadorDosId pd "
+                    + "where pu.jugadoresByJugadorDosId is not null "
+                    + "group by j.apodo ");
+            List<Object[]> lista = q.list();
+            for (Object[] row: lista){
                 System.out.println(row[0] + " -- " + row[1] + " -- " + row[2]);
             }
             
@@ -121,7 +129,7 @@ public class SessionManager {
             this.individual = individual;
             this.grupal = grupal;
         }
-
+        
         public String getApodo() {
             return apodo;
         }
