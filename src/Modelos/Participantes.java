@@ -1,5 +1,5 @@
 package Modelos;
-// Generated 24/02/2018 07:05:41 PM by Hibernate Tools 4.3.1
+// Generated 25/02/2018 01:34:48 AM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -16,21 +16,22 @@ public class Participantes  implements java.io.Serializable {
      private Jugadores jugadoresByJugadorUnoId;
      private Partidas partidas;
      private String nombreGrupo;
+     private int puntaje;
      private Set rondases = new HashSet(0);
 
     public Participantes() {
     }
 
 	
-    public Participantes(Jugadores jugadoresByJugadorUnoId) {
+    public Participantes(Jugadores jugadoresByJugadorUnoId, Partidas partida) {
         this.jugadoresByJugadorUnoId = jugadoresByJugadorUnoId;
+        this.partidas = partida;
     }
-    public Participantes(Jugadores jugadoresByJugadorDosId, Jugadores jugadoresByJugadorUnoId, Partidas partidas, String nombreGrupo, Set rondases) {
+    public Participantes(Jugadores jugadoresByJugadorUnoId, Jugadores jugadoresByJugadorDosId, String nombreGrupo, Partidas partida) {
        this.jugadoresByJugadorDosId = jugadoresByJugadorDosId;
        this.jugadoresByJugadorUnoId = jugadoresByJugadorUnoId;
-       this.partidas = partidas;
        this.nombreGrupo = nombreGrupo;
-       this.rondases = rondases;
+       this.partidas = partida;
     }
    
     public int getId() {
@@ -68,6 +69,13 @@ public class Participantes  implements java.io.Serializable {
     public void setNombreGrupo(String nombreGrupo) {
         this.nombreGrupo = nombreGrupo;
     }
+    public int getPuntaje() {
+        return this.puntaje;
+    }
+    
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
+    }
     public Set getRondases() {
         return this.rondases;
     }
@@ -76,8 +84,9 @@ public class Participantes  implements java.io.Serializable {
         this.rondases = rondases;
     }
 
-
-
+    public void sumPuntaje(int punt) {
+        this.puntaje += punt;
+    }
 
 }
 

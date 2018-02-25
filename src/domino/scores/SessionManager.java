@@ -6,8 +6,13 @@
 package domino.scores;
 
 import Modelos.Jugadores;
-import Modelos.Partidas;
 import java.util.ArrayList;
+import Modelos.Participantes;
+import Modelos.Partidas;
+import Modelos.Rondas;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -83,7 +88,6 @@ public class SessionManager {
                     + "where p.jugadoresByJugadorDosId is not null "
                     + "group by j.apodo)) p "
                     + "group by p.apodo");
-            //Query q = session.createQuery("select i.apodo,g.apodo, (i.individual + g.individual), (i.grupal + g.grupal) from (select j.apodo as apodo, count(*) as individual, 0 as grupal from jugadores j join participantes p on (j.id = p.jugador_uno_id) join partidas par on (par.id = p.partida_id) where p.jugador_dos_id is null group by j.apodo) as i full join (select j.apodo as apodo, 0 as individual, count(*) as grupal from jugadores j join participantes p on (j.id = p.jugador_uno_id) or (j.id = p.jugador_dos_id) join partidas par on (par.id = p.partida_id) where p.jugador_dos_id is not null group by j.apodo) as g on i.apodo = g.apodo;");
             lista = (ArrayList<JugadorPartidas>) q.list();
             lista.toString();
             

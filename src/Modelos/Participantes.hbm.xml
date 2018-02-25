@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 24/02/2018 07:05:41 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 25/02/2018 01:34:48 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Modelos.Participantes" table="participantes" schema="public" optimistic-lock="version">
         <id name="id" type="int">
@@ -17,12 +17,15 @@
             <column name="jugador_uno_id" not-null="true" />
         </many-to-one>
         <many-to-one name="partidas" class="Modelos.Partidas" fetch="select">
-            <column name="partida_id" />
+            <column name="partida_id" not-null="true" />
         </many-to-one>
         <property name="nombreGrupo" type="string">
             <column name="nombre_grupo" />
         </property>
-        <set name="rondases" table="rondas" cascade="save-update" inverse="true" lazy="true" fetch="select">
+        <property name="puntaje" type="int">
+            <column name="puntaje" not-null="true" />
+        </property>
+        <set name="rondases" table="rondas" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="participante_id" not-null="true" />
             </key>
