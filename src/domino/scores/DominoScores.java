@@ -34,7 +34,7 @@ public class DominoScores {
         SessionManager sm = new SessionManager();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int choice, puntaje, punt;
-        choice = puntaje = punt = 0;
+        choice = punt = 0;
         String cad1, cad2;
         cad1 = cad2 = null;
         ArrayList<Participantes> participantes = new ArrayList<>();
@@ -53,8 +53,7 @@ public class DominoScores {
                 if (cad1.equals("listo")) {
                     break;
                 }
-                participantes.add(new Participantes(sm.getAndSaveJugador(cad1)));
-                participantes.get(participantes.size()-1).setPartidas(par);
+                participantes.add(new Participantes(sm.getAndSaveJugador(cad1), par));
                 par.getParticipanteses().add(participantes.get(participantes.size()-1));
                 cont++;
             }
@@ -70,16 +69,14 @@ public class DominoScores {
                 cad1 = br.readLine();
                 System.out.print("Nombre jugador 2: ");
                 cad2 = br.readLine();
-                participantes.add(new Participantes(sm.getAndSaveJugador(cad1), sm.getAndSaveJugador(cad2), cad1));
+                participantes.add(new Participantes(sm.getAndSaveJugador(cad1), sm.getAndSaveJugador(cad2), cad1, par));
  
-                
-                participantes.get(participantes.size()-1).setPartidas(par);
                 par.getParticipanteses().add(participantes.get(participantes.size()-1));
                 cont++;
             }
         }
-        
-        while (puntaje < 100) {
+        boolean vandera = false;
+        while (vandera == false) {
             System.out.print("Cual participante ganó ronda? ");
             choice = Integer.parseInt(br.readLine());
             System.out.print("Puntaje: ");
@@ -88,8 +85,11 @@ public class DominoScores {
             ronda = new Rondas(participantes.get(choice-1), par, numRonda+1, punt);
             par.getRondases().add(ronda);
             participantes.get(choice-1).getRondases().add(ronda);
-            puntaje += punt;
-            numRonda++;
+            participantes.get(choice-1).sumPuntaje(punt);
+            
+            if (participantes.get(choice-1).getPuntaje() >= 100) {
+                vandera = true;
+            }
         }
         
         sm.savePartida(par);
