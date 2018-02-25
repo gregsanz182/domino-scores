@@ -16,7 +16,7 @@ import GUI.Views.Welcome;
 public class handlerGui {
     
      public static void main(String[] args) {
-         Welcome welcome = new Welcome();
+         Welcome welcome = new Welcome(new Configuration());
      }
      
 }

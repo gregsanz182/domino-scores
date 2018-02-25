@@ -5,6 +5,7 @@
  */
 package GUI.Views;
 
+import GUI.Configuration;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.MouseEvent;
@@ -21,26 +22,33 @@ import javax.swing.JFrame;
 public class Welcome extends JFrame {
     private WelcomePanel welcomePanel;
     private DualTeamInfo dualTeaminfo;
+    private LoadUser loadUser;
+    private Configuration configuration;
+    
     public static  CardLayout card = new CardLayout();
     public static Container container;
     
-    public Welcome() {
+    public Welcome(Configuration configuration) {
         super("dominota");
+        this.configuration = configuration;
         container = this.getContentPane();
         setBounds(0,0,720,520);
         setLocationRelativeTo(null);
         container.setLayout(card);
         
-        welcomePanel = new WelcomePanel(card);
-        dualTeaminfo = new DualTeamInfo(card, this);
+        welcomePanel = new WelcomePanel(card, this, configuration);
+        dualTeaminfo = new DualTeamInfo(card, this, configuration);
+        loadUser = new LoadUser(card, this, configuration);
         
         container.add(welcomePanel);
         container.add(dualTeaminfo);
+        container.add(loadUser);
         
-        card.addLayoutComponent(welcomePanel, "WELCOME");
-        card.addLayoutComponent(dualTeaminfo, "DUAL_TEAM_INFO");
+        card.addLayoutComponent(welcomePanel, Configuration.WELCOME);
+        card.addLayoutComponent(dualTeaminfo, Configuration.DUAL_TEAM_INFO);
+        card.addLayoutComponent(loadUser, Configuration.LOAD_USER);
         
-        card.show(container, "WELCOME");
+        card.show(container, Configuration.WELCOME);
         setVisible(true);
         
         addWindowListener( new WindowAdapter() {

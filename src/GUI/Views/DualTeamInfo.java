@@ -5,6 +5,8 @@
  */
 package GUI.Views;
 
+import GUI.Configuration;
+import static GUI.Views.Welcome.container;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -43,10 +45,12 @@ public class DualTeamInfo extends JPanel implements MouseListener{
     
     private CardLayout card;
     private JFrame frame;
+    private Configuration configuration;
     
-    public DualTeamInfo(CardLayout card, JFrame frame){
+    public DualTeamInfo(CardLayout card, JFrame frame, Configuration configuration){
         super();
         this.frame = frame;
+        this.configuration = configuration;
         this.card = card;
         setLayout(null);
         setSize(720,520);
@@ -73,6 +77,8 @@ public class DualTeamInfo extends JPanel implements MouseListener{
         panelPoints.setLayout(null);
         add(scrollPane);
         
+        add_one.addMouseListener(this);
+        add_two.addMouseListener(this);
         edit_one.addMouseListener(this);
         edit_two.addMouseListener(this);
     }
@@ -144,6 +150,15 @@ public class DualTeamInfo extends JPanel implements MouseListener{
                  if(seleccion != null)
                     addPoints(false, Integer.parseInt(seleccion));
             }
+            
+            if(e.getSource() == add_one || e.getSource() == add_two) {
+                if(e.getSource() == add_one)
+                    configuration.setDualOne(true);
+                else
+                    configuration.setDualOne(false);
+               card.show(container, Configuration.LOAD_USER);
+            }
+            
         } else {
             int seleccion = JOptionPane.showOptionDialog(
                     new JLabel(""),

@@ -5,6 +5,7 @@
  */
 package GUI.Views;
 
+import GUI.Configuration;
 import static GUI.Views.Welcome.card;
 import static GUI.Views.Welcome.container;
 import java.awt.CardLayout;
@@ -14,6 +15,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -26,10 +28,14 @@ public class WelcomePanel extends JPanel implements MouseListener {
     private JButton stadistics_two_team = new JButton("Estadisticas");
     private JButton stadistics_four_player = new JButton("Estadisticas");
     private CardLayout card;
+    private JFrame frame;
+    private Configuration configuration;
     
-    public WelcomePanel(CardLayout card){
+    public WelcomePanel(CardLayout card, JFrame frame, Configuration configuration){
         super();
         this.card = card;
+        this.frame = frame;
+        this.configuration = configuration;
         setLayout(null);
         setSize(720,520);
         add(two_team);
@@ -44,6 +50,7 @@ public class WelcomePanel extends JPanel implements MouseListener {
         stadistics_four_player.setBounds(285,320,150,30);
         
         two_team.addMouseListener(this);
+        four_player.addMouseListener(this);
     }
 
     @Override
@@ -53,8 +60,14 @@ public class WelcomePanel extends JPanel implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-       if(e.getSource() == two_team){
-           card.show(container, "DUAL_TEAM_INFO");
+       if(e.getSource() == two_team) {
+           configuration.setDual(true);
+           card.show(container, Configuration.DUAL_TEAM_INFO);
+       }
+       
+       if(e.getSource() == four_player) {
+           configuration.setDual(false);
+           card.show(container, Configuration.DUAL_TEAM_INFO);
        }
     }
 
