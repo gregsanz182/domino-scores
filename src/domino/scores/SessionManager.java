@@ -6,6 +6,12 @@
 package domino.scores;
 
 import Modelos.Jugadores;
+import Modelos.Participantes;
+import Modelos.Partidas;
+import Modelos.Rondas;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -55,6 +61,13 @@ public class SessionManager {
     public void saveJugador(Jugadores jugador) {
         session.beginTransaction();
         session.save(jugador);
+        session.flush();
+        session.getTransaction().commit();
+    }
+    
+    public void savePartida(Partidas partida) {
+        session.beginTransaction();
+        session.save(partida);
         session.flush();
         session.getTransaction().commit();
     }

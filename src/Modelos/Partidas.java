@@ -26,12 +26,6 @@ public class Partidas  implements java.io.Serializable {
         this.fecha = fecha;
         this.puntajeMax = puntajeMax;
     }
-    public Partidas(Date fecha, int puntajeMax, Set rondases, Set participanteses) {
-       this.fecha = fecha;
-       this.puntajeMax = puntajeMax;
-       this.rondases = rondases;
-       this.participanteses = participanteses;
-    }
    
     public int getId() {
         return this.id;

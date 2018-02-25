@@ -16,13 +16,13 @@
         <property name="puntajeMax" type="int">
             <column name="puntaje_max" not-null="true" />
         </property>
-        <set name="rondases" table="rondas" inverse="true" lazy="true" fetch="select">
+        <set name="rondases" table="rondas" cascade="save-update" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="partida_id" not-null="true" />
             </key>
             <one-to-many class="Modelos.Rondas" />
         </set>
-        <set name="participanteses" table="participantes" inverse="true" lazy="true" fetch="select">
+        <set name="participanteses" table="participantes" cascade="save-update" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="partida_id" />
             </key>
