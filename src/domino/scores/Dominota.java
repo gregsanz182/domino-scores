@@ -97,4 +97,8 @@ public class Dominota {
     public boolean guardarPartida() {
         return sessionManager.savePartida(this.partida);
     }
+    
+    public static void obtenerVictoriasYZapatos() {
+        
+    }
 }
