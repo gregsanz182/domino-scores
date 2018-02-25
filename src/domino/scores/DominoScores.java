@@ -38,7 +38,7 @@ public class DominoScores {
         cad1 = cad2 = cad3 = cad4 = null;
         
         //Objeto que manejara los objetos de la Partida.
-        //Construtor recibe como parametro el putaje tope
+        //Construtor recibe como parametro el puntaje tope
         Dominota dom = new Dominota(150);
         
         //Array para nombres de jugadores
