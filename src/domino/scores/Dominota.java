@@ -97,4 +97,10 @@ public class Dominota {
     public boolean guardarPartida() {
         return sessionManager.savePartida(this.partida);
     }
+    
+    public static ArrayList<String> obtenerJugdores() {
+        SessionManager session = new SessionManager();
+        
+        return session.traerJugadores();
+    }
 }

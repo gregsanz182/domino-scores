@@ -7,8 +7,6 @@ package GUI.Services;
 
 import domino.scores.Dominota;
 import java.util.ArrayList;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  *
