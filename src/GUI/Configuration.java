@@ -24,6 +24,7 @@ public class Configuration {
     private ArrayList<String> listUserOne = new ArrayList();
     private ArrayList<String> listUserTwo = new ArrayList();
     private ArrayList<String> listUsers = new ArrayList();
+    private ArrayList<String> listPlayers;
     
     private String nameTeamOne;
     private String nameTeamTwo;
@@ -153,7 +154,7 @@ public class Configuration {
             if(listUsers.get(i).length() != 0)
                 count++;
         
-        if(count >= 2)
+        if(count >= 1)
             return true;
         return false;
     }
@@ -164,5 +165,20 @@ public class Configuration {
     
     public int getIndividualPlayer() {
         return individualPlayer;
+    }
+    
+    public boolean savedPlayersIndividual() {
+        listPlayers = new ArrayList();
+        for(int i=0; i<listUsers.size(); i++)
+            if(listUsers.get(i).length() != 0)
+                listPlayers.add(listUsers.get(i));
+        return HandlerServiceBack.createGame(listPlayers);
+    }
+    
+    public int searchPositionPlayer(int position) {
+        for(int i=0; i<listUsers.size(); i++)
+            if(listUsers.get(i).equals(listPlayers.get(position).toString()))
+                return i;
+        return -1;
     }
 }

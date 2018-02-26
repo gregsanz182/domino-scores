@@ -40,6 +40,8 @@ public class IndividualInfo extends JPanel implements MouseListener {
     private JButton edit_three = new JButton("Puntos");
     private JButton edit_four = new JButton("Puntos");
     
+    private JButton play_game = new JButton("Jugar");
+    
     private int points_one = 0;
     private int points_two = 0;
     private int points_three = 0;
@@ -91,6 +93,16 @@ public class IndividualInfo extends JPanel implements MouseListener {
         edit_two.addMouseListener(this);
         edit_three.addMouseListener(this);
         edit_four.addMouseListener(this);
+        
+        edit_one.setVisible(false);
+        edit_two.setVisible(false);
+        edit_three.setVisible(false);
+        edit_four.setVisible(false);
+        
+        play_game.setBounds(310,150,100,30);
+        play_game.addMouseListener(this);
+        play_game.setVisible(false);
+        add(play_game);
     }
     
     private void addPoints(int player, int points){
@@ -144,9 +156,6 @@ public class IndividualInfo extends JPanel implements MouseListener {
         if(posY > tamPanel)
             panelPoints.setPreferredSize(new Dimension(720, posY + 50));
         frame.paintAll(frame.getGraphics()); 
-        
-        if(points_one == configuration.getMaxPoints() || points_two == configuration.getMaxPoints())
-            isGameTerminated = true;
     }
     
     @Override
@@ -163,8 +172,11 @@ public class IndividualInfo extends JPanel implements MouseListener {
                        new JTextField(""),
                        "Puntos",
                        JOptionPane.QUESTION_MESSAGE);
-                    if(seleccion != null)
-                       addPoints(0, Integer.parseInt(seleccion));
+                    if(seleccion != null) {
+                        int pointsWinner = Integer.parseInt(seleccion);
+                        addPoints(0, pointsWinner);
+                        HandlerServiceBack.asignPoints(configuration.searchPositionPlayer(0), pointsWinner);
+                    }
                 } else {
                     String message = "";
                     if(!configuration.IndividualGame())
@@ -190,8 +202,11 @@ public class IndividualInfo extends JPanel implements MouseListener {
                        new JTextField(""),
                        "Puntos",
                        JOptionPane.QUESTION_MESSAGE);
-                    if(seleccion != null)
-                       addPoints(1, Integer.parseInt(seleccion));
+                    if(seleccion != null) {
+                        int pointsWinner = Integer.parseInt(seleccion);
+                       addPoints(1, pointsWinner);
+                       HandlerServiceBack.asignPoints(configuration.searchPositionPlayer(1), pointsWinner);
+                    }
                 } else {
                     String message = "";
                     if(!configuration.IndividualGame())
@@ -217,8 +232,11 @@ public class IndividualInfo extends JPanel implements MouseListener {
                        new JTextField(""),
                        "Puntos",
                        JOptionPane.QUESTION_MESSAGE);
-                    if(seleccion != null)
-                       addPoints(2, Integer.parseInt(seleccion));
+                    if(seleccion != null) {
+                        int pointsWinner = Integer.parseInt(seleccion);
+                       addPoints(2, pointsWinner);
+                       HandlerServiceBack.asignPoints(configuration.searchPositionPlayer(2), pointsWinner);
+                    }
                 } else {
                     String message = "";
                     if(!configuration.IndividualGame())
@@ -244,8 +262,11 @@ public class IndividualInfo extends JPanel implements MouseListener {
                        new JTextField(""),
                        "Puntos",
                        JOptionPane.QUESTION_MESSAGE);
-                    if(seleccion != null)
-                       addPoints(3, Integer.parseInt(seleccion));
+                    if(seleccion != null) {
+                        int pointsWinner = Integer.parseInt(seleccion);
+                       addPoints(3, pointsWinner);
+                       HandlerServiceBack.asignPoints(configuration.searchPositionPlayer(3), pointsWinner);
+                    }
                 } else {
                     String message = "";
                     if(!configuration.IndividualGame())
@@ -279,7 +300,7 @@ public class IndividualInfo extends JPanel implements MouseListener {
             }
             
         } else {
-            System.out.println(HandlerServiceBack.saveGame());
+            HandlerServiceBack.saveGame();
             int seleccion = JOptionPane.showOptionDialog(
                     new JLabel(""),
                     "Reiniciar partida", 
@@ -298,6 +319,26 @@ public class IndividualInfo extends JPanel implements MouseListener {
                        // restart();
                         break;
                 }
+        }
+       
+       if(configuration.IndividualGame() && !configuration.isRunningGame()) {
+           play_game.setVisible(true);
+       }
+       
+       if(e.getSource() == play_game) {
+            if(configuration.IndividualValidate(0)) edit_one.setVisible(true);
+            if(configuration.IndividualValidate(1)) edit_two.setVisible(true);
+            if(configuration.IndividualValidate(2)) edit_three.setVisible(true);
+            if(configuration.IndividualValidate(3)) edit_four.setVisible(true);
+            configuration.savedPlayersIndividual();
+            play_game.setVisible(false);
+            configuration.setRunningGame(true);
+       }
+       
+       if(points_one >= configuration.getMaxPoints() || points_two >= configuration.getMaxPoints()
+                || points_three >= configuration.getMaxPoints() || points_four >= configuration.getMaxPoints()) {            
+            HandlerServiceBack.saveGame();
+            isGameTerminated = true;
         }
     }
 

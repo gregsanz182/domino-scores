@@ -43,6 +43,10 @@ public class HandlerServiceBack {
                 dominota.iniciarPartidaGrupal(nameTeamOne, listTeamOne, nameTeamTwo, ListTeamTwo);
     }
     
+    public static boolean createGame(ArrayList<String> listPlayers) {
+        return handlerServiceBack.dominota.iniciarPartidaIndividual(listPlayers);
+    }
+    
     public static int asignPoints(int positionList, int points) {
         return handlerServiceBack.dominota.ganarRonda(positionList, points);
     }

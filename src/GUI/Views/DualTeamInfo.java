@@ -120,10 +120,7 @@ public class DualTeamInfo extends JPanel implements MouseListener {
         panelPoints.add(newPoint);
         if(posY > tamPanel)
             panelPoints.setPreferredSize(new Dimension(720, posY + 50));
-        frame.paintAll(frame.getGraphics()); 
-        
-        if(points_one == configuration.getMaxPoints() || points_two == configuration.getMaxPoints())
-            isGameTerminated = true;
+        frame.paintAll(frame.getGraphics());
     }
 
     @Override
@@ -208,7 +205,6 @@ public class DualTeamInfo extends JPanel implements MouseListener {
             }
             
         } else {
-            System.out.println(HandlerServiceBack.saveGame());
             int seleccion = JOptionPane.showOptionDialog(
                     new JLabel(""),
                     "Reiniciar partida", 
@@ -227,6 +223,11 @@ public class DualTeamInfo extends JPanel implements MouseListener {
                         restart();
                         break;
                 }
+        }
+        
+        if(points_one >= configuration.getMaxPoints() || points_two >= configuration.getMaxPoints()) {            
+            HandlerServiceBack.saveGame();
+            isGameTerminated = true;
         }
     }
 
