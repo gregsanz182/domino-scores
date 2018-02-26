@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import org.json.JSONException;
 
 /**
  *
@@ -88,7 +87,7 @@ public class LoadUser extends JPanel implements MouseListener{
         frame.paintAll(frame.getGraphics());
     }
     
-    private void addUser(String name) throws JSONException{
+    private void addUser(String name){
         configuration.addUser(name);
         drawListUser();
     }
@@ -108,11 +107,8 @@ public class LoadUser extends JPanel implements MouseListener{
                         "Nombre",
                         JOptionPane.QUESTION_MESSAGE);
                 if(seleccion != null)
-                    try {
                       addUser(seleccion);
-                    } catch (JSONException ex) {
-                    Logger.getLogger(LoadUser.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                   
                 } else {
                     JOptionPane.showOptionDialog(
                         new JLabel(""),
@@ -131,11 +127,8 @@ public class LoadUser extends JPanel implements MouseListener{
                         "Nombre",
                         JOptionPane.QUESTION_MESSAGE);
                 if(seleccion != null)
-                    try {
                       addUser(seleccion);
-                    } catch (JSONException ex) {
-                    Logger.getLogger(LoadUser.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    
                 } else {
                     JOptionPane.showOptionDialog(
                         new JLabel(""),

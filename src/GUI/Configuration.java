@@ -9,7 +9,6 @@ import GUI.Services.HandlerServiceBack;
 import GUI.Views.LoadUser;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.JSONException;
 
 /**
  *
@@ -79,7 +78,7 @@ public class Configuration {
         listUsers = new ArrayList();
     }
     
-    public void addUser(String name) throws JSONException {
+    public void addUser(String name) {
         if(dual) {
             if(dualOne)
                 listUserOne.add(name);
