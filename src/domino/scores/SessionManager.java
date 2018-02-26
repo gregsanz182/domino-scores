@@ -46,6 +46,23 @@ public class SessionManager {
         }
     }
     
+    public ArrayList<String> traerJugadores() {
+        List<String> lista = null;
+        ArrayList<String> nombres = new ArrayList<>();
+        try {
+            Query q = session.createQuery("select apodo from Jugadores");
+            lista = q.list();
+            for(String row: lista){
+                nombres.add(row);
+            }
+            
+            return nombres;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     /* Guarda jugador y devuelve un objeto Jugadores */
     public Jugadores getAndSaveJugador(String apodo_jugador) {
         try {

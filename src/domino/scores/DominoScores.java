@@ -24,7 +24,11 @@ public class DominoScores {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        aPruebas();
+        //aPruebas();
+        
+        for (String apodo: Dominota.obtenerJugdores()) {
+            System.out.println(apodo);
+        }
         
         //Comienza partida en modo CLI
         //dpruebas();

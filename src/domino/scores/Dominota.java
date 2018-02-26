@@ -98,7 +98,9 @@ public class Dominota {
         return sessionManager.savePartida(this.partida);
     }
     
-    public static void obtenerVictoriasYZapatos() {
+    public static ArrayList<String> obtenerJugdores() {
+        SessionManager session = new SessionManager();
         
+        return session.traerJugadores();
     }
 }
