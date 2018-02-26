@@ -92,7 +92,6 @@ public class Participantes  implements java.io.Serializable {
     public void sumPuntaje(int punt) {
         this.puntaje += punt;
     }
-
 }
 
 

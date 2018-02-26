@@ -11,8 +11,10 @@ import Modelos.Participantes;
 import Modelos.Partidas;
 import Modelos.Rondas;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -84,36 +86,89 @@ public class SessionManager {
     
     public void consulta1 (){
         try {
-            /* cantidad por partidas individuales sirve
-            Query q = session.createQuery("select j.apodo as apodo, count(p) as individual "
-                    + "from Jugadores j left join j.participantesesForJugadorUnoId p "
-                    + "where p.jugadoresByJugadorDosId is null "
+            List<Object[]> lista = null;
+            Map<String, Integer[]> objetos = new HashMap<>();
+            
+            Query q = session.createQuery("select j.apodo, count(pu.partidas.id), 0 "
+                    + "from Jugadores j join j.participantesesForJugadorUnoId pu "
+                    + "where pu.jugadoresByJugadorDosId is null "
                     + "group by j.apodo ");
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
             
-            List<Object[]> lista = q.list();
-            for (Object[] row: lista){
-                System.out.println(row[0] + " -- " + row[1]);
-            }
-            */
+            q = session.createQuery("select j.apodo, 0, count(pu.partidas.id) "
+                    + "from Jugadores j join j.participantesesForJugadorDosId pu "
+                    + "group by j.apodo ");
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
             
-            /*Query q = session.createQuery("select ju.apodo as apodo, count(*) "
-                    + "from Participantes par join par.jugadoresByJugadorUnoId ju "
-                    + "join par.jugadoresByJugadorDosId jd "
-                    + "where par.jugadoresByJugadorDosId is not null "
-                    + "group by ju.apodo ");*/
-            
-            Query q = session.createQuery("select j.apodo as apodo, count(pu), count(pd) "
-                    + "from Jugadores j left join j.participantesesForJugadorUnoId pu "
-                    + "join j.participantesesForJugadorDosId pd "
+            q = session.createQuery("select j.apodo, 0, count(pu.partidas.id) "
+                    + "from Jugadores j join j.participantesesForJugadorUnoId pu "
                     + "where pu.jugadoresByJugadorDosId is not null "
                     + "group by j.apodo ");
-            List<Object[]> lista = q.list();
-            for (Object[] row: lista){
-                System.out.println(row[0] + " -- " + row[1] + " -- " + row[2]);
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
+            
+            
+            for(String key: objetos.keySet()) {
+                System.out.println(key + " -- " + objetos.get(key)[0] + " -- " + objetos.get(key)[1]);
             }
             
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    public void consulta2 (){
+        try {
+            List<Object[]> lista = null;
+            Map<String, Integer[]> objetos = new HashMap<>();
+            
+            Query q = session.createQuery("select j.apodo, count(pu.partidas.id), 0 "
+                    + "from Jugadores j join j.participantesesForJugadorUnoId pu "
+                    + "where pu.puntaje >= pu.partidas.puntajeMax "
+                    + "group by j.apodo ");
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
+            
+            q = session.createQuery("select j.apodo, count(pu.partidas.id), 0 "
+                    + "from Jugadores j join j.participantesesForJugadorDosId pu "
+                    + "where pu.puntaje >= pu.partidas.puntajeMax "
+                    + "group by j.apodo ");
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
+            
+            q = session.createQuery("select j.apodo, 0, count(pu.partidas.id) "
+                    + "from Jugadores j join j.participantesesForJugadorUnoId pu "
+                    + "where pu.puntaje = 0 "
+                    + "group by j.apodo ");
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
+            
+            q = session.createQuery("select j.apodo, 0, count(pu.partidas.id) "
+                    + "from Jugadores j join j.participantesesForJugadorDosId pu "
+                    + "where pu.puntaje = 0 "
+                    + "group by j.apodo ");
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
+            
+            for(String key: objetos.keySet()) {
+                System.out.println(key + " -- " + objetos.get(key)[0] + " -- " + objetos.get(key)[1]);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void unirResultadoConsulta(Map<String, Integer[]> objetos, List<Object[]> lista) {
+        for(Object[] row: lista){
+            if(objetos.containsKey(row[0].toString()) == false) {
+                objetos.put(row[0].toString(), new Integer[]{Integer.parseInt(row[1].toString()), Integer.parseInt(row[2].toString())});
+            } else {
+                objetos.get(row[0].toString())[0] += Integer.parseInt(row[1].toString());
+                objetos.get(row[0].toString())[1] += Integer.parseInt(row[2].toString());
+            }
         }
     }
     

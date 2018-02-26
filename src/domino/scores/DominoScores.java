@@ -24,10 +24,10 @@ public class DominoScores {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        //aPruebas();
+        aPruebas();
         
         //Comienza partida en modo CLI
-        dpruebas();
+        //dpruebas();
     }
     
     public static void dpruebas() throws IOException {
@@ -154,6 +154,6 @@ public class DominoScores {
     
     public static void aPruebas() {
         SessionManager sm = new SessionManager();
-        sm.consulta1();
+        sm.consulta2();
     }
 }
