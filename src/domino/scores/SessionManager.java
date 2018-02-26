@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
@@ -171,6 +172,34 @@ public class SessionManager {
             
             for(String key: objetos.keySet()) {
                 System.out.println(key + " -- " + objetos.get(key)[0] + " -- " + objetos.get(key)[1]);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void consulta3 (){
+        try {
+            //  consulta 3 Cuál ha sido el jugador que ha obtenido más puntos en una RONDA
+            Query q = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, max(r.puntaje) "
+                    + "from Participantes p join p.rondases r "
+                    + "group by p.jugadoresByJugadorUnoId.apodo "
+                    + "order by 2 desc");
+            List<Object[]> lista = q.list();
+            int mayor = 0;
+            ArrayList<String> jugadores = new ArrayList<String>();
+            for (Object[] row: lista){
+                if (mayor == 0) {
+                    mayor = (int) row[1];
+                }
+                if(mayor == (int) row[1]){
+                    jugadores.add(row[0].toString());
+                }
+            }
+            System.out.println("Puntaje: "+mayor);
+            for (int i = 0; i < jugadores.size(); i++) {
+                System.out.println("\t Jugador: "+jugadores.get(i));
             }
             
         } catch (Exception e) {
