@@ -20,7 +20,7 @@ public class Configuration {
     
     private boolean dualOne;
     private boolean dual;
-    private boolean isRunningGame;
+    private boolean runningGame;
     
     private ArrayList<String> listUserOne = new ArrayList();
     private ArrayList<String> listUserTwo = new ArrayList();
@@ -32,11 +32,28 @@ public class Configuration {
     public static final String WELCOME = "WELCOME";
     public static final String DUAL_TEAM_INFO = "DUAL_TEAM_INFO";
     public static final String LOAD_USER = "LOAD_USER";
+    public static final String INDIVIDUAL_INFO = "INDIVIDUAL_INFO";
     
-    public Configuration() {
+    private int maxPoints;
+    private int individualPlayer;
+    
+    public Configuration(int maxPoints) {
         dual = dualOne = true;
-        isRunningGame = false;
+        runningGame = false;
         loadUser = null;
+        this.maxPoints = maxPoints;
+        listUsers.add("");
+        listUsers.add("");
+        listUsers.add("");
+        listUsers.add("");
+    }
+    
+    public int getMaxPoints() {
+        return maxPoints;
+    }
+    
+    public void setMaxPoints(int maxPoints) {
+        this.maxPoints = maxPoints;
     }
     
     public boolean isDualOne() {
@@ -55,6 +72,13 @@ public class Configuration {
         this.dual = dual;
     }
     
+    public void cleanUsers() {
+        listUserOne = listUserTwo = listUsers = null;
+        listUserOne = new ArrayList();
+        listUserTwo = new ArrayList();
+        listUsers = new ArrayList();
+    }
+    
     public void addUser(String name) throws JSONException {
         if(dual) {
             if(dualOne)
@@ -62,19 +86,23 @@ public class Configuration {
             else
                 listUserTwo.add(name);
             
-            if(!isRunningGame)
+            if(!runningGame)
                 if(listUserOne.size() == 2 && listUserTwo.size() == 2) {
-                    isRunningGame = 
+                    runningGame = 
                     HandlerServiceBack.createGame(
                             (String) listUserOne.get(0),
                             listUserOne,
                             (String) listUserTwo.get(0),
                             listUserTwo);
                     
-                    System.out.println(isRunningGame);
+                    if(!runningGame)
+                        cleanUsers();
+                    
                 }
-        } else
-            listUsers.add(name);
+        } else {
+            listUsers.remove(individualPlayer);
+            listUsers.add(individualPlayer, name);
+        }
     }
     
     public List getUsers() {
@@ -99,5 +127,43 @@ public class Configuration {
         if(listUserOne.size() == 2 && listUserTwo.size() == 2)
             return true;
         return false;
+    }
+    
+    public boolean isRunningGame() {
+        return runningGame;
+    }
+    
+    public boolean setRunningGame(boolean runningGame) {
+        return this.runningGame = runningGame;
+    }
+    
+    public boolean IndividualValidate(int typePlayer) {
+        if(listUsers.get(typePlayer).length() == 0)
+            return false;
+        else
+            return true;
+    }
+    
+    public String namePlayerIndividual() {
+        return listUsers.get(individualPlayer);
+    }
+    
+    public boolean IndividualGame() {
+        int count = 0;
+        for(int i=0; i<listUsers.size(); i++)
+            if(listUsers.get(i).length() != 0)
+                count++;
+        
+        if(count >= 2)
+            return true;
+        return false;
+    }
+    
+    public void setIndividualPlayer(int individualPlayer) {
+        this.individualPlayer = individualPlayer;
+    }
+    
+    public int getIndividualPlayer() {
+        return individualPlayer;
     }
 }

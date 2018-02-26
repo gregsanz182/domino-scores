@@ -21,6 +21,7 @@ public class Welcome extends JFrame {
     private WelcomePanel welcomePanel;
     private DualTeamInfo dualTeaminfo;
     private LoadUser loadUser;
+    private IndividualInfo individualInfo;
     private Configuration configuration;
     
     public static  CardLayout card = new CardLayout();
@@ -38,16 +39,19 @@ public class Welcome extends JFrame {
         welcomePanel = new WelcomePanel(card, this, configuration);
         dualTeaminfo = new DualTeamInfo(card, this, configuration);
         loadUser = new LoadUser(card, this, configuration);
+        individualInfo = new IndividualInfo(card, this, configuration);
         
         container.add(welcomePanel);
         container.add(dualTeaminfo);
+        container.add(individualInfo);
         container.add(loadUser);
         
         card.addLayoutComponent(welcomePanel, Configuration.WELCOME);
         card.addLayoutComponent(dualTeaminfo, Configuration.DUAL_TEAM_INFO);
         card.addLayoutComponent(loadUser, Configuration.LOAD_USER);
+        card.addLayoutComponent(individualInfo, Configuration.INDIVIDUAL_INFO);
         
-       card.show(container, Configuration.WELCOME);
+        card.show(container, Configuration.WELCOME);
         setVisible(true);
         
         addWindowListener( new WindowAdapter() {

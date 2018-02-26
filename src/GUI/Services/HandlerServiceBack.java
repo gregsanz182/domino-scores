@@ -44,4 +44,12 @@ public class HandlerServiceBack {
         return handlerServiceBack.
                 dominota.iniciarPartidaGrupal(nameTeamOne, listTeamOne, nameTeamTwo, ListTeamTwo);
     }
+    
+    public static int asignPoints(int positionList, int points) {
+        return handlerServiceBack.dominota.ganarRonda(positionList, points);
+    }
+    
+    public static boolean saveGame() {
+        return handlerServiceBack.dominota.guardarPartida();
+    }
 }

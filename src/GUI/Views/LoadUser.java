@@ -68,8 +68,15 @@ public class LoadUser extends JPanel implements MouseListener{
         panelListUser.removeAll();
         posY = 0;
         
-        for(int i=0; i<configuration.getUsers().size(); i++) {
-            JLabel newUserText = new JLabel((String) configuration.getUsers().get(i));
+        if(configuration.isDual()) {
+            for(int i=0; i<configuration.getUsers().size(); i++) {
+               JLabel newUserText = new JLabel((String) configuration.getUsers().get(i));
+               newUserText.setBounds(50, posY, 100, 20);
+               posY += 30;
+               panelListUser.add(newUserText);
+            }
+        } else {
+            JLabel newUserText = new JLabel((String) configuration.namePlayerIndividual());
             newUserText.setBounds(50, posY, 100, 20);
             posY += 30;
             panelListUser.add(newUserText);
@@ -94,32 +101,61 @@ public class LoadUser extends JPanel implements MouseListener{
     @Override
     public void mousePressed(MouseEvent e) {
        if(e.getSource() == btn_new) {
-           if(configuration.getUsers().size() < 2) {
-            String seleccion = JOptionPane.showInputDialog(
-                    new JTextField(""),
-                    "Nombre",
-                    JOptionPane.QUESTION_MESSAGE);
-            if(seleccion != null)
-                try {
-                    addUser(seleccion);
-            } catch (JSONException ex) {
-                Logger.getLogger(LoadUser.class.getName()).log(Level.SEVERE, null, ex);
+           if(configuration.isDual()) {
+                if(configuration.getUsers().size() < 2) {
+                    String seleccion = JOptionPane.showInputDialog(
+                        new JTextField(""),
+                        "Nombre",
+                        JOptionPane.QUESTION_MESSAGE);
+                if(seleccion != null)
+                    try {
+                      addUser(seleccion);
+                    } catch (JSONException ex) {
+                    Logger.getLogger(LoadUser.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    JOptionPane.showOptionDialog(
+                        new JLabel(""),
+                        "Ya hay dos jugadores por equipo", 
+                        "Dupla formada",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        new Object[] { "Aceptar" },   // null para YES, NO y CANCEL
+                        "opcion 1");
+                }
+            } else {
+                if(!configuration.IndividualValidate(configuration.getIndividualPlayer())) {
+                    String seleccion = JOptionPane.showInputDialog(
+                        new JTextField(""),
+                        "Nombre",
+                        JOptionPane.QUESTION_MESSAGE);
+                if(seleccion != null)
+                    try {
+                      addUser(seleccion);
+                    } catch (JSONException ex) {
+                    Logger.getLogger(LoadUser.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    JOptionPane.showOptionDialog(
+                        new JLabel(""),
+                        "Ya hay un jugador activado", 
+                        "ACTIVO",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        new Object[] { "Aceptar" },   // null para YES, NO y CANCEL
+                        "opcion 1");
+                }
             }
-           } else {
-               JOptionPane.showOptionDialog(
-                    new JLabel(""),
-                    "Ya hay dos jugadores por equipo", 
-                    "Dupla formada",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    new Object[] { "Aceptar" },   // null para YES, NO y CANCEL
-                    "opcion 1");
-           }
        }
        
-       if(e.getSource() == btn_back)
-           card.show(container, Configuration.DUAL_TEAM_INFO);
+       if(e.getSource() == btn_back) {
+           if(configuration.isDual())
+               card.show(container, Configuration.DUAL_TEAM_INFO);
+           else
+               card.show(container, Configuration.INDIVIDUAL_INFO);
+       }
     }
 
     @Override

@@ -6,6 +6,7 @@
 package GUI.Views;
 
 import GUI.Configuration;
+import GUI.Services.HandlerServiceBack;
 import static GUI.Views.Welcome.container;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -28,7 +29,7 @@ import javax.swing.JTextField;
  *
  * @author Joalcapa
  */
-public class DualTeamInfo extends JPanel implements MouseListener{
+public class DualTeamInfo extends JPanel implements MouseListener {
     private JLabel titleMax = new JLabel("Maximo");
     private JLabel pointsMax = new JLabel("100");
     private JButton add_one = new JButton("Agregar");
@@ -96,16 +97,16 @@ public class DualTeamInfo extends JPanel implements MouseListener{
         
         if(isOne) {
             points_one += points;
-            if(points_one > 100) {
-                points_one = 100;
+            if(points_one > configuration.getMaxPoints()) {
+                points_one = configuration.getMaxPoints();
                 isGameTerminated = true;
             }
             newPoint = new JLabel(points + "-" + points_one);
             posX = 185;
         } else {
             points_two += points;
-            if(points_two > 100) {
-                points_two = 100;
+            if(points_two > configuration.getMaxPoints()) {
+                points_two = configuration.getMaxPoints();
                 isGameTerminated = true;
             }
             newPoint = new JLabel(points + "-" + points_two);
@@ -121,7 +122,7 @@ public class DualTeamInfo extends JPanel implements MouseListener{
             panelPoints.setPreferredSize(new Dimension(720, posY + 50));
         frame.paintAll(frame.getGraphics()); 
         
-        if(points_one == 100 || points_two == 100)
+        if(points_one == configuration.getMaxPoints() || points_two == configuration.getMaxPoints())
             isGameTerminated = true;
     }
 
@@ -135,12 +136,34 @@ public class DualTeamInfo extends JPanel implements MouseListener{
         if(!isGameTerminated) {
             if(e.getSource() == edit_one) {
                 if(configuration.dualTeamValidate()) {
+                    Object [] players;
+                    players = new Object[2];
+                    players[0] = configuration.getUsers().get(0);
+                    players[1] = configuration.getUsers().get(1);
+                    Object seleccionObject = JOptionPane.showInputDialog(
+                        new JLabel(),
+                        "Seleccione opcion",
+                        "Selector de opciones",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,  // null para icono defecto
+                        players, 
+                        "opcion 1");
+                    
                     String seleccion = JOptionPane.showInputDialog(
                        new JTextField(""),
                        "Puntos",
                        JOptionPane.QUESTION_MESSAGE);
-                    if(seleccion != null)
+                    if(seleccion != null) {
+                        int pointsWinner = Integer.parseInt(seleccion);
+                        
+                        if(players[0].toString().equals(seleccionObject.toString()))
+                            HandlerServiceBack.asignPoints(1, pointsWinner);
+                        else
+                            HandlerServiceBack.asignPoints(2, pointsWinner);
+                        
                        addPoints(true, Integer.parseInt(seleccion));
+                    }
+                    
                 } else {
                    JOptionPane.showOptionDialog(
                        new JLabel(""),
@@ -185,6 +208,7 @@ public class DualTeamInfo extends JPanel implements MouseListener{
             }
             
         } else {
+            System.out.println(HandlerServiceBack.saveGame());
             int seleccion = JOptionPane.showOptionDialog(
                     new JLabel(""),
                     "Reiniciar partida", 

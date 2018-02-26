@@ -68,7 +68,7 @@ public class WelcomePanel extends JPanel implements MouseListener {
        
        if(e.getSource() == four_player) {
            configuration.setDual(false);
-           card.show(container, Configuration.DUAL_TEAM_INFO);
+           card.show(container, Configuration.INDIVIDUAL_INFO);
        }
     }
 
