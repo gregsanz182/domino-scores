@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
@@ -102,13 +103,31 @@ public class SessionManager {
                     + "where par.jugadoresByJugadorDosId is not null "
                     + "group by ju.apodo ");*/
             
-            Query q = session.createQuery("select j.apodo as apodo, count(pu), count(pd) "
-                    + "from Jugadores j left join j.participantesesForJugadorUnoId pu "
-                    + "join j.participantesesForJugadorDosId pd "
-                    + "where pu.jugadoresByJugadorDosId is not null "
-                    + "group by j.apodo ");
+            Query q = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, max(r.puntaje) "
+                    + "from Participantes p join p.rondases r "
+                    + "group by p.jugadoresByJugadorUnoId.apodo "
+                    + "order by 2 desc");
             List<Object[]> lista = q.list();
+            int mayor = 0;
+            ArrayList<String> jugadores = new ArrayList<String>();
             for (Object[] row: lista){
+                if (mayor == 0) {
+                    mayor = (int) row[1];
+                }
+                if(mayor == (int) row[1]){
+                    jugadores.add(row[0].toString());
+                }
+            }
+            System.out.println("Puntaje: "+mayor);
+            for (int i = 0; i < jugadores.size(); i++) {
+                System.out.println("\t Jugador: "+jugadores.get(i));
+            }
+            
+            Query a = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, r.puntaje, p.puntaje "
+                    + "from Partidas par join par.rondases r "
+                    + "join par.participanteses p ");
+            List<Object[]> listaa = a.list();
+            for (Object[] row: listaa){
                 System.out.println(row[0] + " -- " + row[1] + " -- " + row[2]);
             }
             
