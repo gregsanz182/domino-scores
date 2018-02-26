@@ -133,6 +133,7 @@ public class DualTeamInfo extends JPanel implements MouseListener {
         if(!isGameTerminated) {
             if(e.getSource() == edit_one) {
                 if(configuration.dualTeamValidate()) {
+                /*    configuration.setDualOne(true);
                     Object [] players;
                     players = new Object[2];
                     players[0] = configuration.getUsers().get(0);
@@ -145,7 +146,7 @@ public class DualTeamInfo extends JPanel implements MouseListener {
                         null,  // null para icono defecto
                         players, 
                         "opcion 1");
-                    
+                 */   
                     String seleccion = JOptionPane.showInputDialog(
                        new JTextField(""),
                        "Puntos",
@@ -153,10 +154,10 @@ public class DualTeamInfo extends JPanel implements MouseListener {
                     if(seleccion != null) {
                         int pointsWinner = Integer.parseInt(seleccion);
                         
-                        if(players[0].toString().equals(seleccionObject.toString()))
-                            HandlerServiceBack.asignPoints(1, pointsWinner);
-                        else
-                            HandlerServiceBack.asignPoints(2, pointsWinner);
+                    /*    if(players[0].toString().equals(seleccionObject.toString()))
+                            HandlerServiceBack.asignPoints(0, pointsWinner);
+                        else */
+                            HandlerServiceBack.asignPoints(0, pointsWinner);
                         
                        addPoints(true, Integer.parseInt(seleccion));
                     }
@@ -176,14 +177,36 @@ public class DualTeamInfo extends JPanel implements MouseListener {
         
             if(e.getSource() == edit_two) {
                 if(configuration.dualTeamValidate()) {
+                /*    configuration.setDualOne(false);
+                    Object [] players;
+                    players = new Object[2];
+                    players[0] = configuration.getUsers().get(0);
+                    players[1] = configuration.getUsers().get(1);
+                    Object seleccionObject = JOptionPane.showInputDialog(
+                        new JLabel(),
+                        "Seleccione opcion",
+                        "Selector de opciones",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,  // null para icono defecto
+                        players, 
+                        "opcion 1");
+                    */
                     String seleccion = JOptionPane.showInputDialog(
                        new JTextField(""),
                        "Puntos",
                        JOptionPane.QUESTION_MESSAGE);
-                    if(seleccion != null)
+                    if(seleccion != null) {
+                        int pointsWinner = Integer.parseInt(seleccion);
+                        
+                    /*    if(players[0].toString().equals(seleccionObject.toString()))
+                            HandlerServiceBack.asignPoints(1, pointsWinner);
+                        else */
+                            HandlerServiceBack.asignPoints(1, pointsWinner);
+                        
                        addPoints(false, Integer.parseInt(seleccion));
+                    }
                 } else {
-                    JOptionPane.showOptionDialog(
+                   JOptionPane.showOptionDialog(
                        new JLabel(""),
                        "La partida no puede comenzar hasta no tener los 2 equipos con sus integrantes completos",
                        "",
@@ -204,7 +227,17 @@ public class DualTeamInfo extends JPanel implements MouseListener {
                 card.show(container, Configuration.LOAD_USER);
             }
             
-        } else {
+        } else 
+            gameTrunc();
+        
+        if(points_one >= configuration.getMaxPoints() || points_two >= configuration.getMaxPoints()) {            
+            HandlerServiceBack.saveGame();
+            isGameTerminated = true;
+            gameTrunc();
+        }
+    }
+    
+    public void gameTrunc() {
             int seleccion = JOptionPane.showOptionDialog(
                     new JLabel(""),
                     "Reiniciar partida", 
@@ -223,12 +256,6 @@ public class DualTeamInfo extends JPanel implements MouseListener {
                         restart();
                         break;
                 }
-        }
-        
-        if(points_one >= configuration.getMaxPoints() || points_two >= configuration.getMaxPoints()) {            
-            HandlerServiceBack.saveGame();
-            isGameTerminated = true;
-        }
     }
 
     @Override

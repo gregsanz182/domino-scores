@@ -105,6 +105,13 @@ public class IndividualInfo extends JPanel implements MouseListener {
         add(play_game);
     }
     
+    private void restart() {
+        posY = points_one = points_two = points_three = points_four = 0;
+        panelPoints.removeAll();
+        isGameTerminated = false;
+        frame.paintAll(frame.getGraphics());
+    }
+    
     private void addPoints(int player, int points){
         JLabel newPoint = null;
         int posX = 0;
@@ -299,27 +306,9 @@ public class IndividualInfo extends JPanel implements MouseListener {
                 card.show(container, Configuration.LOAD_USER);
             }
             
-        } else {
-            HandlerServiceBack.saveGame();
-            int seleccion = JOptionPane.showOptionDialog(
-                    new JLabel(""),
-                    "Reiniciar partida", 
-                    "Haz ganado",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    new Object[] { "Cancelar", "Aceptar" },   // null para YES, NO y CANCEL
-                    "opcion 1");
-            
-            if (seleccion != -1)
-                switch(seleccion){
-                    case 0:
-                        break;
-                    default:
-                       // restart();
-                        break;
-                }
-        }
+        } else 
+            gameTrunc();
+        
        
        if(configuration.IndividualGame() && !configuration.isRunningGame()) {
            play_game.setVisible(true);
@@ -339,7 +328,29 @@ public class IndividualInfo extends JPanel implements MouseListener {
                 || points_three >= configuration.getMaxPoints() || points_four >= configuration.getMaxPoints()) {            
             HandlerServiceBack.saveGame();
             isGameTerminated = true;
+            gameTrunc();
         }
+    }
+    
+    public void gameTrunc() {
+            int seleccion = JOptionPane.showOptionDialog(
+                    new JLabel(""),
+                    "Reiniciar partida", 
+                    "Haz ganado",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    new Object[] { "Cancelar", "Aceptar" },   // null para YES, NO y CANCEL
+                    "opcion 1");
+            
+            if (seleccion != -1)
+                switch(seleccion){
+                    case 0:
+                        break;
+                    default:
+                        restart();
+                        break;
+                }
     }
 
     @Override
