@@ -5,20 +5,9 @@
  */
 package domino.scores;
 
-import Modelos.Jugadores;
-import java.util.ArrayList;
-import Modelos.Participantes;
-import Modelos.Partidas;
-import Modelos.Rondas;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
+import Modelos.*;
+import java.util.*;
+import org.hibernate.*;
 
 /**
  *
@@ -83,26 +72,9 @@ public class SessionManager {
         return true;
     }
     
-    public void consulta1 (){
+    public void consulta3 (){
         try {
-            /* cantidad por partidas individuales sirve
-            Query q = session.createQuery("select j.apodo as apodo, count(p) as individual "
-                    + "from Jugadores j left join j.participantesesForJugadorUnoId p "
-                    + "where p.jugadoresByJugadorDosId is null "
-                    + "group by j.apodo ");
-            
-            List<Object[]> lista = q.list();
-            for (Object[] row: lista){
-                System.out.println(row[0] + " -- " + row[1]);
-            }
-            */
-            
-            /*Query q = session.createQuery("select ju.apodo as apodo, count(*) "
-                    + "from Participantes par join par.jugadoresByJugadorUnoId ju "
-                    + "join par.jugadoresByJugadorDosId jd "
-                    + "where par.jugadoresByJugadorDosId is not null "
-                    + "group by ju.apodo ");*/
-            
+            //  consulta 3 Cuál ha sido el jugador que ha obtenido más puntos en una RONDA
             Query q = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, max(r.puntaje) "
                     + "from Participantes p join p.rondases r "
                     + "group by p.jugadoresByJugadorUnoId.apodo "
@@ -123,16 +95,41 @@ public class SessionManager {
                 System.out.println("\t Jugador: "+jugadores.get(i));
             }
             
-            Query a = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, r.puntaje, p.puntaje "
-                    + "from Partidas par join par.rondases r "
-                    + "join par.participanteses p ");
-            List<Object[]> listaa = a.list();
-            for (Object[] row: listaa){
-                System.out.println(row[0] + " -- " + row[1] + " -- " + row[2]);
-            }
-            
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    public void consulta4(){
+        // consulta 4 Porcentaje de victorias en RONDAS por cada jugador (número de victorias entre rondas jugadas).
+        // numero de rondas jugadas por jugador
+        Query a = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, count(p.jugadoresByJugadorUnoId.apodo) "
+                + "from Participantes p join p.rondases r "
+                + "group by p.jugadoresByJugadorUnoId.apodo");
+        List<Object[]> listaa = a.list();
+        System.out.println("jugador uno");
+        for (Object[] row: listaa){
+            System.out.println(row[0] + " -- " + row[1] + " -- " );
+        }
+        Query b = session.createQuery("select p.jugadoresByJugadorDosId.apodo, count(p.jugadoresByJugadorDosId.apodo) "
+                + "from Participantes p join p.rondases r "
+                + "where p.jugadoresByJugadorDosId is not null "
+                + "group by p.jugadoresByJugadorDosId.apodo");
+        List<Object[]> listab = b.list();
+        System.out.println("jugador dos");
+        for (Object[] row: listab){
+            System.out.println(row[0] + " -- " + row[1] + " -- " );
+        }
+        // numero de victorias por jugador
+        Query c = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, count(par.id) "
+                + "from Partidas par join par.participanteses p "
+                + "join par.rondases r "
+                + "where p.puntaje >= par.puntajeMax "
+                + "group by par.id, p.jugadoresByJugadorUnoId.apodo ");
+        List<Object[]> listac = c.list();
+        System.out.println("victorias jugador uno");
+        for (Object[] row: listac){
+            System.out.println(row[0] + " -- " + row[1] + " -- " );
         }
     }
     

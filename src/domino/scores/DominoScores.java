@@ -154,6 +154,7 @@ public class DominoScores {
     
     public static void aPruebas() {
         SessionManager sm = new SessionManager();
-        sm.consulta1();
+        sm.consulta3();
+        sm.consulta4();
     }
 }
