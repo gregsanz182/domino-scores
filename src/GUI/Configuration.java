@@ -145,6 +145,8 @@ public class Configuration {
             listUsers.remove(individualPlayer);
             listUsers.add(individualPlayer, name);
         }
+        
+        allUsers();
     }
     
     public List getUsers() {
@@ -218,9 +220,13 @@ public class Configuration {
     }
     
     public int searchPositionPlayer(int position) {
+        allUsers();
         for(int i=0; i<listUsers.size(); i++)
-            if(listUsers.get(i).equals(listPlayers.get(position).toString()))
-                return i;
+            if(listUsers.get(i).equals(listPlayers.get(position).toString())){
+                for(int j=0; j<this.listPlayersDB.size(); j++)
+                      if(listPlayersDB.get(j).equals(listUsers.get(i).toString()))
+                          return j;
+            }
         return -1;
     }
 }

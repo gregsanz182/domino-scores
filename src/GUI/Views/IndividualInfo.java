@@ -114,6 +114,7 @@ public class IndividualInfo extends JPanel implements MouseListener {
         panelPoints.removeAll();
         isGameTerminated = false;
         configuration.restart();
+        configuration.setRunningGame(false);
         frame.paintAll(frame.getGraphics());
     }
     
@@ -177,8 +178,10 @@ public class IndividualInfo extends JPanel implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(e.getSource() == back_button)
+        if(e.getSource() == back_button) {
             card.show(container, Configuration.WELCOME);
+            restart();
+        }
         
        if(!isGameTerminated) {
             if(e.getSource() == edit_one) {
