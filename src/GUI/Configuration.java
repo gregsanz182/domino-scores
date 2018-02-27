@@ -33,9 +33,16 @@ public class Configuration {
     public static final String DUAL_TEAM_INFO = "DUAL_TEAM_INFO";
     public static final String LOAD_USER = "LOAD_USER";
     public static final String INDIVIDUAL_INFO = "INDIVIDUAL_INFO";
+    public static final String STATISTICS = "STATISTICS";
+    public static final String STATISTICS_ILLUSTRATOR = "STATISTICS_ILLUSTRATOR";
+    public static final String FIRST_QUERY = "FIRST_QUERY";
+    public static final String SECOND_QUERY = "FIRST_QUERY";
+    public static final String THIRD_QUERY = "FIRST_QUERY";
+    public static final String QUARTER_QUERY = "FIRST_QUERY";
     
     private int maxPoints;
     private int individualPlayer;
+    private String queryType;
     
     public Configuration(int maxPoints) {
         dual = dualOne = true;
@@ -46,6 +53,14 @@ public class Configuration {
         listUsers.add("");
         listUsers.add("");
         listUsers.add("");
+    }
+    
+    public String getQueryType() {
+        return queryType;
+    }
+    
+    public void setQueryType(String queryType) {
+        this.queryType = queryType;
     }
     
     public int getMaxPoints() {

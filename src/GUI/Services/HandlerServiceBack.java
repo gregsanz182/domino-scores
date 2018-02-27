@@ -7,6 +7,7 @@ package GUI.Services;
 
 import domino.scores.Dominota;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  *
@@ -53,5 +54,9 @@ public class HandlerServiceBack {
     
     public static boolean saveGame() {
         return handlerServiceBack.dominota.guardarPartida();
+    }
+    
+    public static Map<String, Integer> getFirstQuery() {
+        return handlerServiceBack.dominota.partidasJugadas();
     }
 }

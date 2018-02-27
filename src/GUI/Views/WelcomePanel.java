@@ -26,7 +26,6 @@ import javax.swing.JPanel;
 public class WelcomePanel extends JPanel implements MouseListener {
     private JButton two_team = new JButton("2 Equipos");
     private JButton four_player = new JButton("4 Jugadores");
-    private JButton stadistics_two_team = new JButton("Estadisticas");
     private JButton stadistics_four_player = new JButton("Estadisticas");
     private CardLayout card;
     private JFrame frame;
@@ -41,17 +40,16 @@ public class WelcomePanel extends JPanel implements MouseListener {
         setSize(720,520);
         add(two_team);
         add(four_player);
-        add(stadistics_two_team);
         add(stadistics_four_player);
         setVisible(true);
         
         two_team.setBounds(285,140,150,30);
-        stadistics_two_team.setBounds(285,180,150,30);
-        four_player.setBounds(285,280,150,30);
+        four_player.setBounds(285,180,150,30);
         stadistics_four_player.setBounds(285,320,150,30);
         
         two_team.addMouseListener(this);
         four_player.addMouseListener(this);
+        stadistics_four_player.addMouseListener(this);
     }
 
     @Override
@@ -69,6 +67,10 @@ public class WelcomePanel extends JPanel implements MouseListener {
        if(e.getSource() == four_player) {
            configuration.setDual(false);
            card.show(container, Configuration.INDIVIDUAL_INFO);
+       }
+       
+       if(e.getSource() == stadistics_four_player) {
+           card.show(container, Configuration.STATISTICS);
        }
     }
 
