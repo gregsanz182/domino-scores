@@ -71,9 +71,11 @@ public class StatisticsMenu extends JPanel implements MouseListener{
         DefaultPieDataset datasetGamesIndividual = new DefaultPieDataset();
         DefaultPieDataset datasetGamesDual = new DefaultPieDataset();
         
+        System.out.println("Partidas Individuales  -  Partidas Grupales");
         for(String key: c.keySet()) {
             datasetGamesIndividual.setValue(key, new Double(c.get(key)[0]));
             datasetGamesDual.setValue(key, new Double(c.get(key)[1]));
+            System.out.println(key + ": " + new Double(c.get(key)[0]) + "            -        " + c.get(key)[1]);
         }
         
         JFreeChart chart = ChartFactory.createPieChart("Partidas Individuales", datasetGamesIndividual, true, true, true);
@@ -96,9 +98,11 @@ public class StatisticsMenu extends JPanel implements MouseListener{
         DefaultPieDataset datasetGamesWinner = new DefaultPieDataset();
         DefaultPieDataset datasetGamesZero = new DefaultPieDataset();
         
+        System.out.println("Partidas Ganadas  -  Veces que quedaron en CERO");
         for(String key: c.keySet()) {
             datasetGamesWinner.setValue(key, new Double(c.get(key)[0]));
             datasetGamesZero.setValue(key, new Double(c.get(key)[1]));
+             System.out.println(key + ": " + new Double(c.get(key)[0]) + "            -        " + c.get(key)[1]);
         }
         
         JFreeChart chart = ChartFactory.createPieChart("Partidas Ganadas", datasetGamesWinner, true, true, false);
@@ -120,10 +124,13 @@ public class StatisticsMenu extends JPanel implements MouseListener{
         Map<String, Integer> c = HandlerServiceBack.getThirdQuery();
         DefaultPieDataset datasetMaxPointsRound = new DefaultPieDataset();
         
-        for(String key: c.keySet())
+        System.out.println("Jugadores con mas puntos en una ronda");
+        for(String key: c.keySet()) {
             datasetMaxPointsRound.setValue(key, new Double((double)c.get(key)));
+            System.out.println(key + ":        " + c.get(key));
+        }
         
-        JFreeChart chart = ChartFactory.createPieChart("Jugador con mas puntos en una ronda", datasetMaxPointsRound, true, true, false);
+        JFreeChart chart = ChartFactory.createPieChart("Jugadores con mas puntos en una ronda", datasetMaxPointsRound, true, true, false);
         ChartPanel panelIndividual = new ChartPanel(chart);
         JFrame windowIndividual = new JFrame();
         windowIndividual.setVisible(true);
@@ -135,8 +142,11 @@ public class StatisticsMenu extends JPanel implements MouseListener{
         Map<String, Float> c = HandlerServiceBack.getQuarterQuery();
         DefaultPieDataset datasetWinPercentage = new DefaultPieDataset();
         
-        for(String key: c.keySet())
+        System.out.println("Porcentaje de victorias en rondas");
+        for(String key: c.keySet()){
             datasetWinPercentage.setValue(key, new Double(c.get(key)));
+            System.out.println(key + ": " + c.get(key));
+        }
         
         JFreeChart chart = ChartFactory.createPieChart("Porcentaje de victorias en rondas", datasetWinPercentage, true, true, false);
         ChartPanel panelWinPercentage = new ChartPanel(chart);

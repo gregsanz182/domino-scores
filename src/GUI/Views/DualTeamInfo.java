@@ -31,7 +31,7 @@ import javax.swing.JTextField;
  */
 public class DualTeamInfo extends JPanel implements MouseListener {
     private JLabel titleMax = new JLabel("Maximo");
-    private JLabel pointsMax = new JLabel("100");
+    private JLabel pointsMax = new JLabel("150");
     private JButton add_one = new JButton("Agregar");
     private JButton add_two = new JButton("Agregar");
     private JButton edit_one = new JButton("Agregar puntos");

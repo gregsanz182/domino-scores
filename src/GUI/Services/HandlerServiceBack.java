@@ -8,6 +8,7 @@ package GUI.Services;
 import domino.scores.Dominota;
 import java.util.ArrayList;
 import java.util.Map;
+import GUI.Configuration;
 
 /**
  *
@@ -78,5 +79,9 @@ public class HandlerServiceBack {
     
     public static ArrayList<String> allUsers() {
         return handlerServiceBack.dominota.obtenerJugdores();
+    }
+    
+    public static void restartDominota() {
+        handlerServiceBack.dominota = new Dominota(Configuration.POINTS_MAX);
     }
 }

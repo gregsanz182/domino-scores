@@ -61,10 +61,12 @@ public class WelcomePanel extends JPanel implements MouseListener {
     public void mousePressed(MouseEvent e) {
        if(e.getSource() == two_team) {
            configuration.setDual(true);
+           HandlerServiceBack.restartDominota();
            card.show(container, Configuration.DUAL_TEAM_INFO);
        }
        
        if(e.getSource() == four_player) {
+           HandlerServiceBack.restartDominota();
            configuration.setDual(false);
            card.show(container, Configuration.INDIVIDUAL_INFO);
        }

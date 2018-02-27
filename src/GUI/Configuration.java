@@ -39,6 +39,7 @@ public class Configuration {
     public static final String SECOND_QUERY = "FIRST_QUERY";
     public static final String THIRD_QUERY = "FIRST_QUERY";
     public static final String QUARTER_QUERY = "FIRST_QUERY";
+    public static final int POINTS_MAX = 150;
     
     private int maxPoints;
     private int individualPlayer;
@@ -48,7 +49,7 @@ public class Configuration {
         dual = dualOne = true;
         runningGame = false;
         loadUser = null;
-        this.maxPoints = maxPoints;
+        this.maxPoints = POINTS_MAX;
         listUsers.add("");
         listUsers.add("");
         listUsers.add("");

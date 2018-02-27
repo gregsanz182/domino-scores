@@ -241,13 +241,13 @@ public class SessionManager {
             this.unirResultadoConsulta2(jugadas, lista);
             // numero de victorias por jugador
             q = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, count(r) "
-                    + "from Participantes p join p.rondases r "
+                    + "from Participantes p left join p.rondases r "
                     + "group by p.jugadoresByJugadorUnoId.apodo ");
             lista = q.list();
             this.unirResultadoConsulta2(victorias, lista);
             // numero de victorias por jugador
             q = session.createQuery("select p.jugadoresByJugadorDosId.apodo, count(r) "
-                    + "from Participantes p join p.rondases r "
+                    + "from Participantes p left join p.rondases r "
                     + "where p.jugadoresByJugadorDosId is not null "
                     + "group by p.jugadoresByJugadorDosId.apodo ");
             lista = q.list();
