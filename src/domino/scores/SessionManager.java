@@ -175,8 +175,9 @@ public class SessionManager {
         }
     }
 
-    public ArrayList<String> masPuntosRonda() {
+    public Map<String, Integer> jugadorMaxPuntajePorRonda() {
         ArrayList<String> jugadores = new ArrayList<>();
+        Map<String, Integer> objeto = new HashMap<String, Integer>();
         try {
             //  consulta 3 Cuál ha sido el jugador que ha obtenido más puntos en una RONDA
             // por jugador uno
@@ -208,11 +209,12 @@ public class SessionManager {
                     jugadores.add(row[0].toString());
                 }
             }
+            this.agregarJugadores(objeto,jugadores,mayor);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         } finally {
-            return jugadores;
+            return objeto;
         }
     }
 
@@ -298,6 +300,12 @@ public class SessionManager {
     private void calcularPorcentaje(Map<String, float[]> porcentaje, Map<String, Integer[]> victorias, Map<String, Integer[]> jugadas) {
         for (String key : jugadas.keySet()) {
             porcentaje.put(key, new float[]{((float) victorias.get(key)[0] / (float) jugadas.get(key)[0]) * 100});
+        }
+    }
+
+    private void agregarJugadores(Map<String, Integer> objeto, ArrayList<String> jugadores,int mayor) {
+        for (int i = 0; i < jugadores.size(); i++) {
+            objeto.put(jugadores.get(i), mayor);
         }
     }
 }

@@ -116,4 +116,10 @@ public class Dominota {
         
         return session.partidasGanadasYZapatos();
     }
+    
+    public static Map<String, Integer> jugadorMaxPuntajePorRonda(){
+        SessionManager session = new SessionManager();
+        
+        return session.jugadorMaxPuntajePorRonda();
+    }
 }
