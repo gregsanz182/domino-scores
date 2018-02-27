@@ -120,7 +120,8 @@ public class Dominota {
     public static Map<String, Float> porcentajeVictorias() {
         SessionManager session = new SessionManager();
         
-        return session.porcentajeVictorias();
+        return session.porcentajeVictorias();   
+    }
         
     public static Map<String, Integer> jugadorMaxPuntajePorRonda(){
         SessionManager session = new SessionManager();
