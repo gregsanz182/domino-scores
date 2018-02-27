@@ -11,10 +11,15 @@ import static GUI.Views.Welcome.container;
 import java.awt.CardLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Locale;
 import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -60,6 +65,18 @@ public class StatisticsIllustrator extends JPanel implements MouseListener {
         for(String key: c.keySet()) {
             System.out.println(key + "          " + c.get(key)[0] + "      " + c.get(key)[1]);
         }
+        
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        dataset.setValue("IPHONE", new Double(20));
+        dataset.setValue("I1", new Double(30));
+        dataset.setValue("I334", new Double(10));
+        
+        JFreeChart chart = ChartFactory.createPieChart("Mobile Sales", dataset, true, true, false);
+        ChartPanel panel = new ChartPanel(chart);
+        JFrame ventana = new JFrame();
+        ventana.setVisible(true);
+        ventana.setSize(800,600);
+        ventana.add(panel);
     }
     
     public void secondQueryReport() {

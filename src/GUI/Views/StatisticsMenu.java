@@ -6,13 +6,19 @@
 package GUI.Views;
 
 import GUI.Configuration;
+import GUI.Services.HandlerServiceBack;
 import static GUI.Views.Welcome.container;
 import java.awt.CardLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -56,6 +62,56 @@ public class StatisticsMenu extends JPanel implements MouseListener{
         quarter_query.addMouseListener(this);
         back_button.addMouseListener(this);
     }
+    
+    public void firstQueryReport() {
+        Map<String, Integer[]> c = HandlerServiceBack.getFirstQuery();
+        DefaultPieDataset datasetGamesIndividual = new DefaultPieDataset();
+        DefaultPieDataset datasetGamesDual = new DefaultPieDataset();
+        
+        for(String key: c.keySet()) {
+            datasetGamesIndividual.setValue(key, new Double(c.get(key)[0]));
+            datasetGamesDual.setValue(key, new Double(c.get(key)[1]));
+        }
+        
+        JFreeChart chart = ChartFactory.createPieChart("Partidas Individuales", datasetGamesIndividual, true, true, false);
+        ChartPanel panelIndividual = new ChartPanel(chart);
+        JFrame windowIndividual = new JFrame();
+        windowIndividual.setVisible(true);
+        windowIndividual.setSize(400,400);
+        windowIndividual.add(panelIndividual);
+        
+        JFreeChart chartDual = ChartFactory.createPieChart("Partidas Grupales", datasetGamesDual, true, true, false);
+        ChartPanel panelDual = new ChartPanel(chartDual);
+        JFrame windowDual = new JFrame();
+        windowDual.setVisible(true);
+        windowDual.setSize(400,400);
+        windowDual.add(panelDual);
+    }
+    
+    public void secondQueryReport() {
+        Map<String, Integer[]> c = HandlerServiceBack.getFirstQuery();
+        DefaultPieDataset datasetGamesIndividual = new DefaultPieDataset();
+        DefaultPieDataset datasetGamesDual = new DefaultPieDataset();
+        
+        for(String key: c.keySet()) {
+            datasetGamesIndividual.setValue(key, new Double(c.get(key)[0]));
+            datasetGamesDual.setValue(key, new Double(c.get(key)[1]));
+        }
+        
+        JFreeChart chart = ChartFactory.createPieChart("Partidas Individuales", datasetGamesIndividual, true, true, false);
+        ChartPanel panelIndividual = new ChartPanel(chart);
+        JFrame windowIndividual = new JFrame();
+        windowIndividual.setVisible(true);
+        windowIndividual.setSize(400,400);
+        windowIndividual.add(panelIndividual);
+        
+        JFreeChart chartDual = ChartFactory.createPieChart("Partidas Grupales", datasetGamesDual, true, true, false);
+        ChartPanel panelDual = new ChartPanel(chartDual);
+        JFrame windowDual = new JFrame();
+        windowDual.setVisible(true);
+        windowDual.setSize(400,400);
+        windowDual.add(panelDual);
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -67,18 +123,11 @@ public class StatisticsMenu extends JPanel implements MouseListener{
         if(e.getSource() == back_button)
             card.show(container, Configuration.WELCOME);
         
-        if(e.getSource() == first_query) {
-            System.out.println("dd");
-            configuration.setQueryType(Configuration.FIRST_QUERY);
-            statisticsIllustrator.restructure();
-            card.show(container, Configuration.STATISTICS_ILLUSTRATOR);
-        }
+        if(e.getSource() == first_query)
+            firstQueryReport();
         
-        if(e.getSource() == second_query) {
-            configuration.setQueryType(Configuration.SECOND_QUERY);
-            statisticsIllustrator.restructure();
-            card.show(container, Configuration.STATISTICS_ILLUSTRATOR);
-        }
+        if(e.getSource() == second_query)
+            secondQueryReport();
         
         if(e.getSource() == third_query) {
             configuration.setQueryType(Configuration.THIRD_QUERY);
