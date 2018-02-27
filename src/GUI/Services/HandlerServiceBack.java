@@ -59,4 +59,9 @@ public class HandlerServiceBack {
     public static Map<String, Integer[]> getFirstQuery() {
         return handlerServiceBack.dominota.partidasJugadas();
     }
+    
+    public static Map<String, Integer[]> getSecondQuery() {
+        return handlerServiceBack.dominota.partidasGanadasYZapatos();
+    }
+            
 }

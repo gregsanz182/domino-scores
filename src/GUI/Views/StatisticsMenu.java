@@ -89,28 +89,28 @@ public class StatisticsMenu extends JPanel implements MouseListener{
     }
     
     public void secondQueryReport() {
-        Map<String, Integer[]> c = HandlerServiceBack.getFirstQuery();
-        DefaultPieDataset datasetGamesIndividual = new DefaultPieDataset();
-        DefaultPieDataset datasetGamesDual = new DefaultPieDataset();
+        Map<String, Integer[]> c = HandlerServiceBack.getSecondQuery();
+        DefaultPieDataset datasetGamesWinner = new DefaultPieDataset();
+        DefaultPieDataset datasetGamesZero = new DefaultPieDataset();
         
         for(String key: c.keySet()) {
-            datasetGamesIndividual.setValue(key, new Double(c.get(key)[0]));
-            datasetGamesDual.setValue(key, new Double(c.get(key)[1]));
+            datasetGamesWinner.setValue(key, new Double(c.get(key)[0]));
+            datasetGamesZero.setValue(key, new Double(c.get(key)[1]));
         }
         
-        JFreeChart chart = ChartFactory.createPieChart("Partidas Individuales", datasetGamesIndividual, true, true, false);
-        ChartPanel panelIndividual = new ChartPanel(chart);
-        JFrame windowIndividual = new JFrame();
-        windowIndividual.setVisible(true);
-        windowIndividual.setSize(400,400);
-        windowIndividual.add(panelIndividual);
+        JFreeChart chart = ChartFactory.createPieChart("Partidas Ganadas", datasetGamesWinner, true, true, false);
+        ChartPanel panelWinner = new ChartPanel(chart);
+        JFrame windowWinner = new JFrame();
+        windowWinner.setVisible(true);
+        windowWinner.setSize(400,400);
+        windowWinner.add(panelWinner);
         
-        JFreeChart chartDual = ChartFactory.createPieChart("Partidas Grupales", datasetGamesDual, true, true, false);
-        ChartPanel panelDual = new ChartPanel(chartDual);
-        JFrame windowDual = new JFrame();
-        windowDual.setVisible(true);
-        windowDual.setSize(400,400);
-        windowDual.add(panelDual);
+        JFreeChart chartZero = ChartFactory.createPieChart("Veces que quedaron en CERO", datasetGamesZero, true, true, false);
+        ChartPanel panelZero = new ChartPanel(chartZero);
+        JFrame windowZero = new JFrame();
+        windowZero.setVisible(true);
+        windowZero.setSize(400,400);
+        windowZero.add(panelZero);
     }
 
     @Override
