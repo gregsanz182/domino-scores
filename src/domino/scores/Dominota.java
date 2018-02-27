@@ -121,5 +121,10 @@ public class Dominota {
         SessionManager session = new SessionManager();
         
         return session.porcentajeVictorias();
+        
+    public static Map<String, Integer> jugadorMaxPuntajePorRonda(){
+        SessionManager session = new SessionManager();
+        
+        return session.jugadorMaxPuntajePorRonda();
     }
 }
