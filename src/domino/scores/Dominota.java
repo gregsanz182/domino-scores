@@ -10,6 +10,7 @@ import Modelos.Participantes;
 import Modelos.Partidas;
 import Modelos.Rondas;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  *
@@ -96,5 +97,23 @@ public class Dominota {
     
     public boolean guardarPartida() {
         return sessionManager.savePartida(this.partida);
+    }
+    
+    public static ArrayList<String> obtenerJugdores() {
+        SessionManager session = new SessionManager();
+        
+        return session.traerJugadores();
+    }
+    
+    public static Map<String, Integer[]> partidasJugadas() {
+        SessionManager session = new SessionManager();
+        
+        return session.obtenerPartidasJugadas();
+    }
+    
+    public static Map<String, Integer[]> partidasGanadasYZapatos() {
+        SessionManager session = new SessionManager();
+        
+        return session.partidasGanadasYZapatos();
     }
 }

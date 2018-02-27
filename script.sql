@@ -19,7 +19,7 @@ CREATE TABLE participantes (
 	id serial primary key,
 	partida_id integer references partidas(id),
 	nombre_grupo varchar,
-	puntaje integer,
+	puntaje integer not null,
 	jugador_uno_id integer references jugadores(id) not null,
 	jugador_dos_id integer references jugadores(id)
 );

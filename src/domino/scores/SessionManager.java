@@ -8,6 +8,15 @@ package domino.scores;
 import Modelos.*;
 import java.util.*;
 import org.hibernate.*;
+import Modelos.Jugadores;
+import java.util.ArrayList;
+import Modelos.Partidas;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -31,6 +40,23 @@ public class SessionManager {
             System.out.println(e.getMessage());
         } finally {
             return session;
+        }
+    }
+    
+    public ArrayList<String> traerJugadores() {
+        List<String> lista = null;
+        ArrayList<String> nombres = new ArrayList<>();
+        try {
+            Query q = session.createQuery("select apodo from Jugadores");
+            lista = q.list();
+            for(String row: lista){
+                nombres.add(row);
+            }
+            
+            return nombres;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
     
@@ -72,6 +98,84 @@ public class SessionManager {
         return true;
     }
     
+    public Map<String, Integer[]> obtenerPartidasJugadas() {
+        List<Object[]> lista = null;
+        Map<String, Integer[]> objetos = new HashMap<>();
+        try {
+            Query q = session.createQuery("select j.apodo, count(pu.partidas.id), 0 "
+                    + "from Jugadores j join j.participantesesForJugadorUnoId pu "
+                    + "where pu.jugadoresByJugadorDosId is null "
+                    + "group by j.apodo ");
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
+            
+            q = session.createQuery("select j.apodo, 0, count(pu.partidas.id) "
+                    + "from Jugadores j join j.participantesesForJugadorDosId pu "
+                    + "group by j.apodo ");
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
+            
+            q = session.createQuery("select j.apodo, 0, count(pu.partidas.id) "
+                    + "from Jugadores j join j.participantesesForJugadorUnoId pu "
+                    + "where pu.jugadoresByJugadorDosId is not null "
+                    + "group by j.apodo ");
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
+            
+            
+            /*for(String key: objetos.keySet()) {
+                System.out.println(key + " -- " + objetos.get(key)[0] + " -- " + objetos.get(key)[1]);
+            }*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return objetos;
+        }
+    }
+    
+    public Map<String, Integer[]> partidasGanadasYZapatos(){
+        List<Object[]> lista = null;
+        Map<String, Integer[]> objetos = new HashMap<>();
+        try {
+            Query q = session.createQuery("select j.apodo, count(pu.partidas.id), 0 "
+                    + "from Jugadores j join j.participantesesForJugadorUnoId pu "
+                    + "where pu.puntaje >= pu.partidas.puntajeMax "
+                    + "group by j.apodo ");
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
+            
+            q = session.createQuery("select j.apodo, count(pu.partidas.id), 0 "
+                    + "from Jugadores j join j.participantesesForJugadorDosId pu "
+                    + "where pu.puntaje >= pu.partidas.puntajeMax "
+                    + "group by j.apodo ");
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
+            
+            q = session.createQuery("select j.apodo, 0, count(pu.partidas.id) "
+                    + "from Jugadores j join j.participantesesForJugadorUnoId pu "
+                    + "where pu.puntaje = 0 "
+                    + "group by j.apodo ");
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
+            
+            q = session.createQuery("select j.apodo, 0, count(pu.partidas.id) "
+                    + "from Jugadores j join j.participantesesForJugadorDosId pu "
+                    + "where pu.puntaje = 0 "
+                    + "group by j.apodo ");
+            lista = q.list();
+            this.unirResultadoConsulta(objetos, lista);
+            
+            /*for(String key: objetos.keySet()) {
+                System.out.println(key + " -- " + objetos.get(key)[0] + " -- " + objetos.get(key)[1]);
+            }*/
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return objetos;
+        }
+    }
+
     public void consulta3 (){
         try {
             //  consulta 3 Cuál ha sido el jugador que ha obtenido más puntos en una RONDA
@@ -138,6 +242,17 @@ public class SessionManager {
         // PORCENTAJE DE VICTORIAS POR JUGADOR
         for (String key: porcentaje.keySet()){
             System.out.println(key + " -- " + porcentaje.get(key)[0]);
+        }
+    }
+    
+    private void unirResultadoConsulta(Map<String, Integer[]> objetos, List<Object[]> lista) {
+        for(Object[] row: lista){
+            if(objetos.containsKey(row[0].toString()) == false) {
+                objetos.put(row[0].toString(), new Integer[]{Integer.parseInt(row[1].toString()), Integer.parseInt(row[2].toString())});
+            } else {
+                objetos.get(row[0].toString())[0] += Integer.parseInt(row[1].toString());
+                objetos.get(row[0].toString())[1] += Integer.parseInt(row[2].toString());
+            }
         }
     }
 

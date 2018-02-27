@@ -65,7 +65,6 @@ public class Jugadores  implements java.io.Serializable {
         return this.participacionesTotal;
     }
 
-
 }
 
 
