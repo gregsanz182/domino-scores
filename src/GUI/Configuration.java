@@ -34,7 +34,6 @@ public class Configuration {
     public static final String LOAD_USER = "LOAD_USER";
     public static final String INDIVIDUAL_INFO = "INDIVIDUAL_INFO";
     public static final String STATISTICS = "STATISTICS";
-    public static final String STATISTICS_ILLUSTRATOR = "STATISTICS_ILLUSTRATOR";
     public static final String FIRST_QUERY = "FIRST_QUERY";
     public static final String SECOND_QUERY = "FIRST_QUERY";
     public static final String THIRD_QUERY = "FIRST_QUERY";

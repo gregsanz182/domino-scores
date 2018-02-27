@@ -298,4 +298,33 @@ public class SessionManager {
             objeto.put(jugadores.get(i), mayor);
         }
     }
+    
+    public Map<Integer, String[]> equipoConMasRondas() {
+        Query q = null;
+        List<Object[]> partida = null;
+        List<Object[]> list = null;
+        Map<Integer, String[]> data = new HashMap<>();
+        
+        q = session.createQuery("select p.id, count(r) "
+                    + "from Participantes p join p.rondases r "
+                + "where p.jugadoresByJugadorDosId is not null "
+                + " and p.jugadoresByJugadorUnoId is not null "
+                    + "group by p.id order by 2 desc");
+        partida = q.list();
+        
+        if(partida.size() != 0) {
+            q = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, p.jugadoresByJugadorDosId.apodo "
+                    + "from Participantes p where p.id = " + partida.get(0)[0].toString());
+            list = q.list();
+            String names[] = new String [2];
+            names[0] = list.get(0)[0].toString();
+            names[1] = list.get(0)[1].toString();
+        
+            data.put(
+               Integer.parseInt(partida.get(0)[1].toString()),
+               names);
+            return data;
+        }
+        return null;
+    }
 }

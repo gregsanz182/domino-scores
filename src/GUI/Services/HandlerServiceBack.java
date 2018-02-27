@@ -64,7 +64,15 @@ public class HandlerServiceBack {
         return handlerServiceBack.dominota.partidasGanadasYZapatos();
     }
     
-    public static Map<String, float[]> getQuarterQuery() {
+    public static Map<String, Integer> getThirdQuery() {
+        return handlerServiceBack.dominota.jugadorMaxPuntajePorRonda();
+    }
+    
+    public static Map<String, Float> getQuarterQuery() {
         return handlerServiceBack.dominota.porcentajeVictorias();
+    }
+    
+    public static Map<Integer, String[]> getExtraQuery() {
+        return handlerServiceBack.dominota.equipoConMasRondas();
     }
 }

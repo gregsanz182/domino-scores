@@ -23,7 +23,6 @@ public class Welcome extends JFrame {
     private LoadUser loadUser;
     private IndividualInfo individualInfo;
     private StatisticsMenu statisticsMenu;
-    private StatisticsIllustrator statisticsIllustrator;
     private Configuration configuration;
     
     public static  CardLayout card = new CardLayout();
@@ -42,14 +41,12 @@ public class Welcome extends JFrame {
         dualTeaminfo = new DualTeamInfo(card, this, configuration);
         loadUser = new LoadUser(card, this, configuration);
         individualInfo = new IndividualInfo(card, this, configuration);
-        statisticsIllustrator = new StatisticsIllustrator(card, this, configuration);
-        statisticsMenu = new StatisticsMenu(card, this, configuration, statisticsIllustrator);
+        statisticsMenu = new StatisticsMenu(card, this, configuration);
         
         container.add(welcomePanel);
         container.add(dualTeaminfo);
         container.add(individualInfo);
         container.add(loadUser);
-        container.add(statisticsIllustrator);
         container.add(statisticsMenu);
         
         card.addLayoutComponent(welcomePanel, Configuration.WELCOME);
@@ -57,7 +54,6 @@ public class Welcome extends JFrame {
         card.addLayoutComponent(loadUser, Configuration.LOAD_USER);
         card.addLayoutComponent(individualInfo, Configuration.INDIVIDUAL_INFO);
         card.addLayoutComponent(statisticsMenu, Configuration.STATISTICS);
-        card.addLayoutComponent(statisticsIllustrator, Configuration.STATISTICS_ILLUSTRATOR);
         
         card.show(container, Configuration.WELCOME);
         setVisible(true);
