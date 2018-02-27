@@ -5,6 +5,9 @@
  */
 package domino.scores;
 
+import Modelos.*;
+import java.util.*;
+import org.hibernate.*;
 import Modelos.Jugadores;
 import java.util.ArrayList;
 import Modelos.Partidas;
@@ -95,7 +98,7 @@ public class SessionManager {
         return true;
     }
     
-    public Map<String, Integer[]> obtenerPartidasJugadas (){
+    public Map<String, Integer[]> obtenerPartidasJugadas() {
         List<Object[]> lista = null;
         Map<String, Integer[]> objetos = new HashMap<>();
         try {
@@ -130,11 +133,10 @@ public class SessionManager {
         }
     }
     
-    public void consulta2 (){
+    public Map<String, Integer[]> partidasGanadasYZapatos(){
+        List<Object[]> lista = null;
+        Map<String, Integer[]> objetos = new HashMap<>();
         try {
-            List<Object[]> lista = null;
-            Map<String, Integer[]> objetos = new HashMap<>();
-            
             Query q = session.createQuery("select j.apodo, count(pu.partidas.id), 0 "
                     + "from Jugadores j join j.participantesesForJugadorUnoId pu "
                     + "where pu.puntaje >= pu.partidas.puntajeMax "
@@ -163,12 +165,14 @@ public class SessionManager {
             lista = q.list();
             this.unirResultadoConsulta(objetos, lista);
             
-            for(String key: objetos.keySet()) {
+            /*for(String key: objetos.keySet()) {
                 System.out.println(key + " -- " + objetos.get(key)[0] + " -- " + objetos.get(key)[1]);
-            }
+            }*/
             
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            return objetos;
         }
     }
 
@@ -200,6 +204,47 @@ public class SessionManager {
         }
     }
     
+    public void consulta4(){
+        // consulta 4 Porcentaje de victorias en RONDAS por cada jugador (número de victorias entre rondas jugadas)
+        Query q = null;
+        List<Object[]> lista = null;
+        Map<String, Integer[]> jugadas = new HashMap<String, Integer[]>();
+        Map<String, Integer[]> victorias = new HashMap<String, Integer[]>();
+        Map<String, float[]> porcentaje = new HashMap<String, float[]>();
+        // numero de rondas jugadas por jugador uno
+        q = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, count(r) "
+                + "from Partidas par join par.rondases r "
+                + "join par.participanteses p "
+                + "group by p.jugadoresByJugadorUnoId.apodo ");
+        lista = q.list();
+        this.unirRondasJugadas(jugadas,lista);
+        // numero de rondas jugadas por jugador dos
+        q = session.createQuery("select p.jugadoresByJugadorDosId.apodo, count(r) "
+                + "from Partidas par join par.rondases r "
+                + "join par.participanteses p "
+                + "group by p.jugadoresByJugadorDosId.apodo ");
+        lista = q.list();
+        this.unirRondasJugadas(jugadas,lista);
+        // numero de victorias por jugador
+        q = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, count(r) "
+                + "from Participantes p join p.rondases r "
+                + "group by p.jugadoresByJugadorUnoId.apodo ");
+        lista = q.list();
+        this.unirVictorias(victorias,lista);
+        // numero de victorias por jugador
+        q = session.createQuery("select p.jugadoresByJugadorDosId.apodo, count(r) "
+                + "from Participantes p join p.rondases r "
+                + "where p.jugadoresByJugadorDosId is not null "
+                + "group by p.jugadoresByJugadorDosId.apodo ");
+        lista = q.list();
+        this.unirVictorias(victorias,lista);
+        this.calcularPorcentaje(porcentaje,victorias,jugadas);
+        // PORCENTAJE DE VICTORIAS POR JUGADOR
+        for (String key: porcentaje.keySet()){
+            System.out.println(key + " -- " + porcentaje.get(key)[0]);
+        }
+    }
+    
     private void unirResultadoConsulta(Map<String, Integer[]> objetos, List<Object[]> lista) {
         for(Object[] row: lista){
             if(objetos.containsKey(row[0].toString()) == false) {
@@ -210,43 +255,30 @@ public class SessionManager {
             }
         }
     }
-    
-    public class JugadorPartidas {
-        private String apodo;
-        private int individual,grupal;
-        
-        JugadorPartidas(){
-        }
-        
-        JugadorPartidas(String apodo, int individual,int grupal){
-            this.apodo = apodo;
-            this.individual = individual;
-            this.grupal = grupal;
-        }
-        
-        public String getApodo() {
-            return apodo;
-        }
 
-        public void setApodo(String apodo) {
-            this.apodo = apodo;
+    private void unirRondasJugadas(Map<String, Integer[]> jugadas, List<Object[]> lista) {
+        for (Object[] row : lista) {
+            if (jugadas.containsKey(row[0].toString()) == false) {
+                jugadas.put(row[0].toString(), new Integer[]{Integer.parseInt(row[1].toString())});
+            }else{
+                jugadas.get(row[0].toString())[0] += Integer.parseInt(row[1].toString());
+            }
         }
+    }
 
-        public int getIndividual() {
-            return individual;
+    private void unirVictorias(Map<String, Integer[]> victorias, List<Object[]> lista) {
+        for (Object[] row : lista) {
+            if (victorias.containsKey(row[0].toString()) == false) {
+                victorias.put(row[0].toString(), new Integer[]{Integer.parseInt(row[1].toString())});
+            }else{
+                victorias.get(row[0].toString())[0] += Integer.parseInt(row[1].toString());
+            }
         }
+    }
 
-        public void setIndividual(int individual) {
-            this.individual = individual;
+    private void calcularPorcentaje(Map<String, float[]> porcentaje, Map<String, Integer[]> victorias, Map<String, Integer[]> jugadas) {
+        for ( String key: jugadas.keySet() ){
+            porcentaje.put(key, new float[]{((float)victorias.get(key)[0]/(float)jugadas.get(key)[0])*100});
         }
-
-        public int getGrupal() {
-            return grupal;
-        }
-
-        public void setGrupal(int grupal) {
-            this.grupal = grupal;
-        }
-        
     }
 }
