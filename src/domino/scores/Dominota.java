@@ -10,6 +10,7 @@ import Modelos.Participantes;
 import Modelos.Partidas;
 import Modelos.Rondas;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  *
@@ -102,5 +103,11 @@ public class Dominota {
         SessionManager session = new SessionManager();
         
         return session.traerJugadores();
+    }
+    
+    public static Map<String, Integer[]> partidasJugadas() {
+        SessionManager session = new SessionManager();
+        
+        return session.obtenerPartidasJugadas();
     }
 }
