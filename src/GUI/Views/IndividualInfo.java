@@ -39,7 +39,7 @@ public class IndividualInfo extends JPanel implements MouseListener {
     private JButton edit_two = new JButton("Puntos");
     private JButton edit_three = new JButton("Puntos");
     private JButton edit_four = new JButton("Puntos");
-    
+    private JButton back_button = new JButton("ATRAS");
     private JButton play_game = new JButton("Jugar");
     
     private int points_one = 0;
@@ -103,6 +103,10 @@ public class IndividualInfo extends JPanel implements MouseListener {
         play_game.addMouseListener(this);
         play_game.setVisible(false);
         add(play_game);
+        add(back_button);
+        
+        back_button.setBounds(0,0,100,30);
+        back_button.addMouseListener(this);
     }
     
     private void restart() {
@@ -172,6 +176,9 @@ public class IndividualInfo extends JPanel implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        if(e.getSource() == back_button)
+            card.show(container, Configuration.WELCOME);
+        
        if(!isGameTerminated) {
             if(e.getSource() == edit_one) {
                 if(configuration.IndividualValidate(0) && configuration.IndividualGame()) {

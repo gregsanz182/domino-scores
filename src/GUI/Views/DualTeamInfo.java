@@ -36,6 +36,7 @@ public class DualTeamInfo extends JPanel implements MouseListener {
     private JButton add_two = new JButton("Agregar");
     private JButton edit_one = new JButton("Agregar puntos");
     private JButton edit_two = new JButton("Agregar puntos");
+    private JButton back_button = new JButton("ATRAS");
     private JPanel panelPoints = new JPanel();
     
     private int points_one = 0;
@@ -62,6 +63,7 @@ public class DualTeamInfo extends JPanel implements MouseListener {
         add(add_two);
         add(edit_one);
         add(edit_two);
+        add(back_button);
         setVisible(true);
         
         titleMax.setBounds(335,20,50,20);
@@ -70,6 +72,7 @@ public class DualTeamInfo extends JPanel implements MouseListener {
         add_two.setBounds(410,100,100,30);
         edit_one.setBounds(185,140,150,30);
         edit_two.setBounds(385,140,150,30);
+        back_button.setBounds(0,0,100,30);
         
         JScrollPane scrollPane = new JScrollPane(panelPoints);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -82,6 +85,7 @@ public class DualTeamInfo extends JPanel implements MouseListener {
         add_two.addMouseListener(this);
         edit_one.addMouseListener(this);
         edit_two.addMouseListener(this);
+        back_button.addMouseListener(this);
     }
     
     private void restart() {
@@ -130,6 +134,9 @@ public class DualTeamInfo extends JPanel implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        if(e.getSource() == back_button)
+            card.show(container, Configuration.WELCOME);
+        
         if(!isGameTerminated) {
             if(e.getSource() == edit_one) {
                 if(configuration.dualTeamValidate()) {
