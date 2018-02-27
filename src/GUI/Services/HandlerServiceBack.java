@@ -75,4 +75,8 @@ public class HandlerServiceBack {
     public static Map<Integer, String[]> getExtraQuery() {
         return handlerServiceBack.dominota.equipoConMasRondas();
     }
+    
+    public static ArrayList<String> allUsers() {
+        return handlerServiceBack.dominota.obtenerJugdores();
+    }
 }

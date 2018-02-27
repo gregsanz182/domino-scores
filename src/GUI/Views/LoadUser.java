@@ -102,12 +102,41 @@ public class LoadUser extends JPanel implements MouseListener{
        if(e.getSource() == btn_new) {
            if(configuration.isDual()) {
                 if(configuration.getUsers().size() < 2) {
+                    
+                    
+                    int seleccionInt = JOptionPane.showOptionDialog(
+                    new JLabel(""),
+                    "Usuario", 
+                    "Usuario",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    new Object[] { "Crear nuevo usuario", "Cargar Usuario" },   // null para YES, NO y CANCEL
+                    "opcion 1");
+                    
+                    if(seleccionInt == -1 || seleccionInt == 0) {
                     String seleccion = JOptionPane.showInputDialog(
                         new JTextField(""),
                         "Nombre",
                         JOptionPane.QUESTION_MESSAGE);
                 if(seleccion != null)
                       addUser(seleccion);
+                    } else {
+                        
+                    
+                    Object seleccionObject = JOptionPane.showInputDialog(
+                        new JLabel(),
+                        "Seleccione opcion",
+                        "Selector de opciones",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,  // null para icono defecto
+                        configuration.getUserDbObject(), 
+                        "opcion 1");
+                    if(seleccionObject != null)
+                    addUser(seleccionObject.toString());
+                    }
+                    
+                    
                    
                 } else {
                     JOptionPane.showOptionDialog(
@@ -122,12 +151,39 @@ public class LoadUser extends JPanel implements MouseListener{
                 }
             } else {
                 if(!configuration.IndividualValidate(configuration.getIndividualPlayer())) {
+                    
+                    int seleccionInt = JOptionPane.showOptionDialog(
+                    new JLabel(""),
+                    "Usuario", 
+                    "Usuario",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    new Object[] { "Crear nuevo usuario", "Cargar Usuario" },   // null para YES, NO y CANCEL
+                    "opcion 1");
+                    
+                    
+                    if(seleccionInt == -1 || seleccionInt == 0) {
                     String seleccion = JOptionPane.showInputDialog(
                         new JTextField(""),
                         "Nombre",
                         JOptionPane.QUESTION_MESSAGE);
                 if(seleccion != null)
                       addUser(seleccion);
+                    } else {
+                        
+                    
+                    Object seleccionObject = JOptionPane.showInputDialog(
+                        new JLabel(),
+                        "Seleccione opcion",
+                        "Selector de opciones",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,  // null para icono defecto
+                        configuration.getUserDbObject(), 
+                        "opcion 1");
+                    if(seleccionObject != null)
+                    addUser(seleccionObject.toString());
+                    }
                     
                 } else {
                     JOptionPane.showOptionDialog(

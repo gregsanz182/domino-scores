@@ -32,6 +32,7 @@ public class Welcome extends JFrame {
         super("dominota");
         HandlerServiceBack.getSingletonInstance();
         this.configuration = configuration;
+        this.configuration.allUsers();
         container = this.getContentPane();
         setBounds(0,0,720,520);
         setLocationRelativeTo(null);

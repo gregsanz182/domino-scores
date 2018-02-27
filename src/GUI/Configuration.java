@@ -25,6 +25,7 @@ public class Configuration {
     private ArrayList<String> listUserTwo = new ArrayList();
     private ArrayList<String> listUsers = new ArrayList();
     private ArrayList<String> listPlayers;
+    private ArrayList<String> listPlayersDB;
     
     private String nameTeamOne;
     private String nameTeamTwo;
@@ -52,6 +53,33 @@ public class Configuration {
         listUsers.add("");
         listUsers.add("");
         listUsers.add("");
+    }
+    
+    public void restart() {
+       listUserOne = new ArrayList();
+       listUserTwo = new ArrayList();
+       listUsers = new ArrayList();
+       listUsers.add("");
+       listUsers.add("");
+       listUsers.add("");
+       listUsers.add("");
+    }
+    
+    public void allUsers(){
+        listPlayersDB = HandlerServiceBack.allUsers();
+        for(int i= 0; i<listPlayersDB.size(); i++)
+            System.out.println(listPlayersDB.get(i));
+    }
+    
+    public ArrayList<String> getUserDb() {
+        return listPlayersDB;
+    }
+    
+    public Object[] getUserDbObject() {
+        Object [] obj = new Object[listPlayersDB.size()];
+        for(int i=0; i<listPlayersDB.size(); i++)
+            obj[i] = listPlayersDB.get(i);
+        return obj;
     }
     
     public String getQueryType() {

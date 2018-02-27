@@ -92,6 +92,7 @@ public class DualTeamInfo extends JPanel implements MouseListener {
         posY = points_one = points_two = 0;
         panelPoints.removeAll();
         isGameTerminated = false;
+        configuration.restart();
         frame.paintAll(frame.getGraphics());
     }
     

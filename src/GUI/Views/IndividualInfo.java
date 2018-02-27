@@ -113,6 +113,7 @@ public class IndividualInfo extends JPanel implements MouseListener {
         posY = points_one = points_two = points_three = points_four = 0;
         panelPoints.removeAll();
         isGameTerminated = false;
+        configuration.restart();
         frame.paintAll(frame.getGraphics());
     }
     

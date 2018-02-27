@@ -76,14 +76,14 @@ public class StatisticsMenu extends JPanel implements MouseListener{
             datasetGamesDual.setValue(key, new Double(c.get(key)[1]));
         }
         
-        JFreeChart chart = ChartFactory.createPieChart("Partidas Individuales", datasetGamesIndividual, true, true, false);
+        JFreeChart chart = ChartFactory.createPieChart("Partidas Individuales", datasetGamesIndividual, true, true, true);
         ChartPanel panelIndividual = new ChartPanel(chart);
         JFrame windowIndividual = new JFrame();
         windowIndividual.setVisible(true);
         windowIndividual.setSize(400,400);
         windowIndividual.add(panelIndividual);
         
-        JFreeChart chartDual = ChartFactory.createPieChart("Partidas Grupales", datasetGamesDual, true, true, false);
+        JFreeChart chartDual = ChartFactory.createPieChart("Partidas Grupales", datasetGamesDual, true, true, true);
         ChartPanel panelDual = new ChartPanel(chartDual);
         JFrame windowDual = new JFrame();
         windowDual.setVisible(true);
