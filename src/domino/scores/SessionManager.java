@@ -7,20 +7,13 @@ package domino.scores;
 
 import Modelos.Jugadores;
 import java.util.ArrayList;
-import Modelos.Participantes;
 import Modelos.Partidas;
-import Modelos.Rondas;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
 
 /**
  *
@@ -102,11 +95,10 @@ public class SessionManager {
         return true;
     }
     
-    public void consulta1 (){
+    public Map<String, Integer[]> obtenerPartidasJugadas (){
+        List<Object[]> lista = null;
+        Map<String, Integer[]> objetos = new HashMap<>();
         try {
-            List<Object[]> lista = null;
-            Map<String, Integer[]> objetos = new HashMap<>();
-            
             Query q = session.createQuery("select j.apodo, count(pu.partidas.id), 0 "
                     + "from Jugadores j join j.participantesesForJugadorUnoId pu "
                     + "where pu.jugadoresByJugadorDosId is null "
@@ -128,12 +120,13 @@ public class SessionManager {
             this.unirResultadoConsulta(objetos, lista);
             
             
-            for(String key: objetos.keySet()) {
+            /*for(String key: objetos.keySet()) {
                 System.out.println(key + " -- " + objetos.get(key)[0] + " -- " + objetos.get(key)[1]);
-            }
-            
+            }*/
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            return objetos;
         }
     }
     

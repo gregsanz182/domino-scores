@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  *
@@ -22,8 +23,11 @@ public class DominoScores {
     public static void main(String[] args) throws IOException {
         aPruebas();
         
-        for (String apodo: Dominota.obtenerJugdores()) {
-            System.out.println(apodo);
+        Map<String, Integer[]> cons1 = Dominota.partidasJugadas();
+        
+        System.out.println("Jugador            Individuales           Grupales");
+        for(String key: cons1.keySet()) {
+            System.out.println(key+"               " + cons1.get(key)[0] + "               " + cons1.get(key)[1]);
         }
         
         //Comienza partida en modo CLI
