@@ -95,7 +95,7 @@ public class SessionManager {
         return true;
     }
     
-    public Map<String, Integer[]> obtenerPartidasJugadas (){
+    public Map<String, Integer[]> obtenerPartidasJugadas() {
         List<Object[]> lista = null;
         Map<String, Integer[]> objetos = new HashMap<>();
         try {
@@ -130,11 +130,10 @@ public class SessionManager {
         }
     }
     
-    public void consulta2 (){
+    public Map<String, Integer[]> rondasGanadasYZapatos(){
+        List<Object[]> lista = null;
+        Map<String, Integer[]> objetos = new HashMap<>();
         try {
-            List<Object[]> lista = null;
-            Map<String, Integer[]> objetos = new HashMap<>();
-            
             Query q = session.createQuery("select j.apodo, count(pu.partidas.id), 0 "
                     + "from Jugadores j join j.participantesesForJugadorUnoId pu "
                     + "where pu.puntaje >= pu.partidas.puntajeMax "
@@ -163,12 +162,14 @@ public class SessionManager {
             lista = q.list();
             this.unirResultadoConsulta(objetos, lista);
             
-            for(String key: objetos.keySet()) {
+            /*for(String key: objetos.keySet()) {
                 System.out.println(key + " -- " + objetos.get(key)[0] + " -- " + objetos.get(key)[1]);
-            }
+            }*/
             
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            return objetos;
         }
     }
 

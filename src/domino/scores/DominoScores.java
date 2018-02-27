@@ -21,11 +21,10 @@ public class DominoScores {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        aPruebas();
         
-        Map<String, Integer[]> cons1 = Dominota.partidasJugadas();
+        Map<String, Integer[]> cons1 = Dominota.rondasGanadasYZapatos();
         
-        System.out.println("Jugador            Individuales           Grupales");
+        System.out.println("Jugador            Ganadas           Zapatos");
         for(String key: cons1.keySet()) {
             System.out.println(key+"               " + cons1.get(key)[0] + "               " + cons1.get(key)[1]);
         }
@@ -154,10 +153,5 @@ public class DominoScores {
          * Guarda en cascada las rondas, los participantes y la partida como tal
         */
         System.out.println(dom.guardarPartida());
-    }
-    
-    public static void aPruebas() {
-        SessionManager sm = new SessionManager();
-        sm.consulta2();
     }
 }

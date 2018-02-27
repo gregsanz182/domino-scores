@@ -110,4 +110,10 @@ public class Dominota {
         
         return session.obtenerPartidasJugadas();
     }
+    
+    public static Map<String, Integer[]> rondasGanadasYZapatos() {
+        SessionManager session = new SessionManager();
+        
+        return session.rondasGanadasYZapatos();
+    }
 }
