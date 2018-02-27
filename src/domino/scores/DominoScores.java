@@ -22,7 +22,7 @@ public class DominoScores {
      */
     public static void main(String[] args) throws IOException {
         
-        Map<String, Integer[]> cons1 = Dominota.rondasGanadasYZapatos();
+        Map<String, Integer[]> cons1 = Dominota.partidasGanadasYZapatos();
         
         System.out.println("Jugador            Ganadas           Zapatos");
         for(String key: cons1.keySet()) {

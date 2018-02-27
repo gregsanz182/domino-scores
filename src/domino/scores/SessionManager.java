@@ -130,7 +130,7 @@ public class SessionManager {
         }
     }
     
-    public Map<String, Integer[]> rondasGanadasYZapatos(){
+    public Map<String, Integer[]> partidasGanadasYZapatos(){
         List<Object[]> lista = null;
         Map<String, Integer[]> objetos = new HashMap<>();
         try {

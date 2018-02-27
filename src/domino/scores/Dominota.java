@@ -111,9 +111,9 @@ public class Dominota {
         return session.obtenerPartidasJugadas();
     }
     
-    public static Map<String, Integer[]> rondasGanadasYZapatos() {
+    public static Map<String, Integer[]> partidasGanadasYZapatos() {
         SessionManager session = new SessionManager();
         
-        return session.rondasGanadasYZapatos();
+        return session.partidasGanadasYZapatos();
     }
 }
