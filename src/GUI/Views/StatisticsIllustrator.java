@@ -6,10 +6,12 @@
 package GUI.Views;
 
 import GUI.Configuration;
+import GUI.Services.HandlerServiceBack;
 import static GUI.Views.Welcome.container;
 import java.awt.CardLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -54,7 +56,10 @@ public class StatisticsIllustrator extends JPanel implements MouseListener {
     }
     
     public void firstQueryReport() {
-        
+        Map<String, Integer[]> c = HandlerServiceBack.getFirstQuery();
+        for(String key: c.keySet()) {
+            System.out.println(key + "          " + c.get(key)[0] + "      " + c.get(key)[1]);
+        }
     }
     
     public void secondQueryReport() {

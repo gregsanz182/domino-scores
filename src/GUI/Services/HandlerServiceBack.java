@@ -56,7 +56,7 @@ public class HandlerServiceBack {
         return handlerServiceBack.dominota.guardarPartida();
     }
     
-    public static Map<String, Integer> getFirstQuery() {
+    public static Map<String, Integer[]> getFirstQuery() {
         return handlerServiceBack.dominota.partidasJugadas();
     }
 }
