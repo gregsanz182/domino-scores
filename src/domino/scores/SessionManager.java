@@ -175,8 +175,9 @@ public class SessionManager {
         }
     }
 
-    public ArrayList<String> masPuntosRonda() {
+    public Map<String, Integer> jugadorMaxPuntajePorRonda() {
         ArrayList<String> jugadores = new ArrayList<>();
+        Map<String, Integer> objeto = new HashMap<String, Integer>();
         try {
             //  consulta 3 Cuál ha sido el jugador que ha obtenido más puntos en una RONDA
             // por jugador uno
@@ -208,21 +209,21 @@ public class SessionManager {
                     jugadores.add(row[0].toString());
                 }
             }
+            this.agregarJugadores(objeto,jugadores,mayor);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         } finally {
-            return jugadores;
+            return objeto;
         }
     }
 
-    public Map<String, float[]> porcentajeVictorias() {
+    public Map<String, Float> porcentajeVictorias() {
         // consulta 4 Porcentaje de victorias en RONDAS por cada jugador (número de victorias entre rondas jugadas)
         Query q = null;
         List<Object[]> lista = null;
-        Map<String, Integer[]> jugadas = new HashMap<String, Integer[]>();
-        Map<String, Integer[]> victorias = new HashMap<String, Integer[]>();
-        Map<String, float[]> porcentaje = new HashMap<String, float[]>();
+        Map<String, Integer> jugadas = new HashMap<>();
+        Map<String, Integer> victorias = new HashMap<>();
         try {
             // numero de rondas jugadas por jugador uno
             q = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, count(r) "
@@ -230,37 +231,36 @@ public class SessionManager {
                     + "join par.participanteses p "
                     + "group by p.jugadoresByJugadorUnoId.apodo ");
             lista = q.list();
-            this.unirRondasJugadas(jugadas, lista);
+            this.unirResultadoConsulta2(jugadas, lista);
             // numero de rondas jugadas por jugador dos
             q = session.createQuery("select p.jugadoresByJugadorDosId.apodo, count(r) "
                     + "from Partidas par join par.rondases r "
                     + "join par.participanteses p "
                     + "group by p.jugadoresByJugadorDosId.apodo ");
             lista = q.list();
-            this.unirRondasJugadas(jugadas, lista);
+            this.unirResultadoConsulta2(jugadas, lista);
             // numero de victorias por jugador
             q = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, count(r) "
                     + "from Participantes p join p.rondases r "
                     + "group by p.jugadoresByJugadorUnoId.apodo ");
             lista = q.list();
-            this.unirVictorias(victorias, lista);
+            this.unirResultadoConsulta2(victorias, lista);
             // numero de victorias por jugador
             q = session.createQuery("select p.jugadoresByJugadorDosId.apodo, count(r) "
                     + "from Participantes p join p.rondases r "
                     + "where p.jugadoresByJugadorDosId is not null "
                     + "group by p.jugadoresByJugadorDosId.apodo ");
             lista = q.list();
-            this.unirVictorias(victorias, lista);
-            this.calcularPorcentaje(porcentaje, victorias, jugadas);
+            this.unirResultadoConsulta2(victorias, lista);
+            
             // PORCENTAJE DE VICTORIAS POR JUGADOR
-            for (String key : porcentaje.keySet()) {
+            /*for (String key : porcentaje.keySet()) {
                 System.out.println(key + " -- " + porcentaje.get(key)[0]);
-            }
+            }*/
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         } finally {
-            return porcentaje;
+            return this.calcularPorcentaje(victorias, jugadas);
         }
     }
 
@@ -275,29 +275,27 @@ public class SessionManager {
         }
     }
 
-    private void unirRondasJugadas(Map<String, Integer[]> jugadas, List<Object[]> lista) {
+    private void unirResultadoConsulta2(Map<String, Integer> jugadas, List<Object[]> lista) {
         for (Object[] row : lista) {
             if (jugadas.containsKey(row[0].toString()) == false) {
-                jugadas.put(row[0].toString(), new Integer[]{Integer.parseInt(row[1].toString())});
+                jugadas.put(row[0].toString(), Integer.parseInt(row[1].toString()));
             } else {
-                jugadas.get(row[0].toString())[0] += Integer.parseInt(row[1].toString());
+                jugadas.put(row[0].toString(), jugadas.get(row[0].toString()) + Integer.parseInt(row[1].toString()));
             }
         }
     }
 
-    private void unirVictorias(Map<String, Integer[]> victorias, List<Object[]> lista) {
-        for (Object[] row : lista) {
-            if (victorias.containsKey(row[0].toString()) == false) {
-                victorias.put(row[0].toString(), new Integer[]{Integer.parseInt(row[1].toString())});
-            } else {
-                victorias.get(row[0].toString())[0] += Integer.parseInt(row[1].toString());
-            }
-        }
-    }
-
-    private void calcularPorcentaje(Map<String, float[]> porcentaje, Map<String, Integer[]> victorias, Map<String, Integer[]> jugadas) {
+    private Map<String, Float> calcularPorcentaje(Map<String, Integer> victorias, Map<String, Integer> jugadas) {
+        Map<String, Float> porcentaje = new HashMap<>();
         for (String key : jugadas.keySet()) {
-            porcentaje.put(key, new float[]{((float) victorias.get(key)[0] / (float) jugadas.get(key)[0]) * 100});
+            porcentaje.put(key, ((float) victorias.get(key) / (float) jugadas.get(key)) * 100);
+        }
+        return porcentaje;
+    }
+
+    private void agregarJugadores(Map<String, Integer> objeto, ArrayList<String> jugadores,int mayor) {
+        for (int i = 0; i < jugadores.size(); i++) {
+            objeto.put(jugadores.get(i), mayor);
         }
     }
 }
