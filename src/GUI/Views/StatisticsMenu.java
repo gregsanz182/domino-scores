@@ -112,6 +112,60 @@ public class StatisticsMenu extends JPanel implements MouseListener{
         windowZero.setSize(400,400);
         windowZero.add(panelZero);
     }
+    
+    public void quarterQueryReport() {
+        Map<String, float[]> c = HandlerServiceBack.getQuarterQuery();
+        DefaultPieDataset datasetGamesIndividual = new DefaultPieDataset();
+        DefaultPieDataset datasetGamesDual = new DefaultPieDataset();
+        
+        for(String key: c.keySet()) {
+            datasetGamesIndividual.setValue(key, new Double(c.get(key)[0]));
+            System.out.println(key + "   --   " + c.get(key)[0]);
+          //  datasetGamesDual.setValue(key, new Double(c.get(key)[1]));
+        }
+        /*
+        JFreeChart chart = ChartFactory.createPieChart("Partidas Individuales", datasetGamesIndividual, true, true, false);
+        ChartPanel panelIndividual = new ChartPanel(chart);
+        JFrame windowIndividual = new JFrame();
+        windowIndividual.setVisible(true);
+        windowIndividual.setSize(400,400);
+        windowIndividual.add(panelIndividual);
+        
+        JFreeChart chartDual = ChartFactory.createPieChart("Partidas Grupales", datasetGamesDual, true, true, false);
+        ChartPanel panelDual = new ChartPanel(chartDual);
+        JFrame windowDual = new JFrame();
+        windowDual.setVisible(true);
+        windowDual.setSize(400,400);
+        windowDual.add(panelDual);
+*/
+    }
+    
+    public void thirdQueryReport() {
+        Map<String, float[]> c = HandlerServiceBack.getQuarterQuery();
+        DefaultPieDataset datasetGamesIndividual = new DefaultPieDataset();
+        DefaultPieDataset datasetGamesDual = new DefaultPieDataset();
+        
+        for(String key: c.keySet()) {
+            datasetGamesIndividual.setValue(key, new Double(c.get(key)[0]));
+            System.out.println(key + "   --   " + c.get(key)[0]);
+          //  datasetGamesDual.setValue(key, new Double(c.get(key)[1]));
+        }
+        /*
+        JFreeChart chart = ChartFactory.createPieChart("Partidas Individuales", datasetGamesIndividual, true, true, false);
+        ChartPanel panelIndividual = new ChartPanel(chart);
+        JFrame windowIndividual = new JFrame();
+        windowIndividual.setVisible(true);
+        windowIndividual.setSize(400,400);
+        windowIndividual.add(panelIndividual);
+        
+        JFreeChart chartDual = ChartFactory.createPieChart("Partidas Grupales", datasetGamesDual, true, true, false);
+        ChartPanel panelDual = new ChartPanel(chartDual);
+        JFrame windowDual = new JFrame();
+        windowDual.setVisible(true);
+        windowDual.setSize(400,400);
+        windowDual.add(panelDual);
+*/
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -129,17 +183,11 @@ public class StatisticsMenu extends JPanel implements MouseListener{
         if(e.getSource() == second_query)
             secondQueryReport();
         
-        if(e.getSource() == third_query) {
-            configuration.setQueryType(Configuration.THIRD_QUERY);
-            statisticsIllustrator.restructure();
-            card.show(container, Configuration.STATISTICS_ILLUSTRATOR);
-        }
+        if(e.getSource() == third_query)
+            thirdQueryReport();
         
-        if(e.getSource() == quarter_query) {
-            configuration.setQueryType(Configuration.QUARTER_QUERY);
-            statisticsIllustrator.restructure();
-            card.show(container, Configuration.STATISTICS_ILLUSTRATOR);
-        }
+        if(e.getSource() == quarter_query)
+            quarterQueryReport();
     }
 
     @Override

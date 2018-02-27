@@ -63,5 +63,8 @@ public class HandlerServiceBack {
     public static Map<String, Integer[]> getSecondQuery() {
         return handlerServiceBack.dominota.partidasGanadasYZapatos();
     }
-            
+    
+    public static Map<String, float[]> getQuarterQuery() {
+        return handlerServiceBack.dominota.porcentajeVictorias();
+    }
 }
