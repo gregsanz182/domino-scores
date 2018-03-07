@@ -13,8 +13,8 @@ Esta aplicación está basada en la aplicacion de Android ["Dominota"](https://p
 
 ### Desarrolladores
 * [Anny Chacón (@AnnyEsme27)](https://github.com/AnnyEsme27)
-* [Gregory Sánchez (@gregsanz182)](https://github.com/gregsanz182)
 * [José Caceres (@joalcapa)](https://github.com/joalcapa)
+* [Gregory Sánchez (@gregsanz182)](https://github.com/gregsanz182)
 
 *Proyecto desarrollado con propositos educativos para la **Universidad Nacional
 Experimental del Táchira***
