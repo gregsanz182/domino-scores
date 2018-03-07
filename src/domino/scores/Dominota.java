@@ -128,4 +128,10 @@ public class Dominota {
         
         return session.jugadorMaxPuntajePorRonda();
     }
+    
+    public static Map<Integer, String[]> equipoConMasRondas(){
+        SessionManager session = new SessionManager();
+        
+        return session.equipoConMasRondas();
+    }
 }

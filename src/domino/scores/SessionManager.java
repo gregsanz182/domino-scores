@@ -177,7 +177,7 @@ public class SessionManager {
 
     public Map<String, Integer> jugadorMaxPuntajePorRonda() {
         ArrayList<String> jugadores = new ArrayList<>();
-        Map<String, Integer> objeto = new HashMap<String, Integer>();
+        int mayor = 0;
         try {
             //  consulta 3 Cuál ha sido el jugador que ha obtenido más puntos en una RONDA
             // por jugador uno
@@ -186,7 +186,7 @@ public class SessionManager {
                     + "group by p.jugadoresByJugadorUnoId.apodo "
                     + "order by 2 desc");
             List<Object[]> lista = q.list();
-            int mayor = 0;
+            mayor = 0;
             for (Object[] row : lista) {
                 if (mayor == 0) {
                     mayor = (int) row[1];
@@ -209,12 +209,11 @@ public class SessionManager {
                     jugadores.add(row[0].toString());
                 }
             }
-            this.agregarJugadores(objeto,jugadores,mayor);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         } finally {
-            return objeto;
+            return this.agregarJugadores(jugadores,mayor);
         }
     }
 
@@ -241,13 +240,13 @@ public class SessionManager {
             this.unirResultadoConsulta2(jugadas, lista);
             // numero de victorias por jugador
             q = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, count(r) "
-                    + "from Participantes p join p.rondases r "
+                    + "from Participantes p left join p.rondases r "
                     + "group by p.jugadoresByJugadorUnoId.apodo ");
             lista = q.list();
             this.unirResultadoConsulta2(victorias, lista);
             // numero de victorias por jugador
             q = session.createQuery("select p.jugadoresByJugadorDosId.apodo, count(r) "
-                    + "from Participantes p join p.rondases r "
+                    + "from Participantes p left join p.rondases r "
                     + "where p.jugadoresByJugadorDosId is not null "
                     + "group by p.jugadoresByJugadorDosId.apodo ");
             lista = q.list();
@@ -293,9 +292,40 @@ public class SessionManager {
         return porcentaje;
     }
 
-    private void agregarJugadores(Map<String, Integer> objeto, ArrayList<String> jugadores,int mayor) {
+    private Map<String, Integer> agregarJugadores(ArrayList<String> jugadores,int mayor) {
+        Map<String, Integer> objeto = new HashMap<String, Integer>();
         for (int i = 0; i < jugadores.size(); i++) {
             objeto.put(jugadores.get(i), mayor);
         }
+        return objeto;
+    }
+    
+    public Map<Integer, String[]> equipoConMasRondas() {
+        Query q = null;
+        List<Object[]> partida = null;
+        List<Object[]> list = null;
+        Map<Integer, String[]> data = new HashMap<>();
+        
+        q = session.createQuery("select p.id, count(r) "
+                    + "from Participantes p join p.rondases r "
+                + "where p.jugadoresByJugadorDosId is not null "
+                + " and p.jugadoresByJugadorUnoId is not null "
+                    + "group by p.id order by 2 desc");
+        partida = q.list();
+        
+        if(partida.size() != 0) {
+            q = session.createQuery("select p.jugadoresByJugadorUnoId.apodo, p.jugadoresByJugadorDosId.apodo "
+                    + "from Participantes p where p.id = " + partida.get(0)[0].toString());
+            list = q.list();
+            String names[] = new String [2];
+            names[0] = list.get(0)[0].toString();
+            names[1] = list.get(0)[1].toString();
+        
+            data.put(
+               Integer.parseInt(partida.get(0)[1].toString()),
+               names);
+            return data;
+        }
+        return null;
     }
 }
