@@ -12,7 +12,7 @@ Para la base de datos se utilizó postgreSQL. (Junto con los archivos se incluye
 Esta aplicación está basada en la aplicacion de Android ["Dominota"](https://play.google.com/store/apps/details?id=com.botsydroid.cuentadomino&hl=es) (por [BotsyDroid](https://play.google.com/store/apps/developer?id=BotsyDroid&hl=es))
 
 ### Desarrolladores
-* [Anny Chacón (@AnnyEsme27)](https://github.com/AnnyEsme27)
+* [Anny Chacón (@AnnyChacon)](https://github.com/AnnyChacon)
 * [José Caceres (@joalcapa)](https://github.com/joalcapa)
 * [Gregory Sánchez (@gregsanz182)](https://github.com/gregsanz182)
 
